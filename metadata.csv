@@ -1,0 +1,327 @@
+Patient,group,subgroup,X_SEX,X_AGE_YEARS,Clinical.microbe.1,Clinical.microbe.2,Clinical.microbe.3,Clinical.microbe.4,Clinical.microbe.5,mNGS.virus.1,mNGS.virus.2,mNGS.virus.3,mNGS.virus.4,mNGS.bacteria.1,mNGS.bacteria.2,sum_nt_viral_rpm,sum_nt_bacterial_rpm,SDI
+P1,LRTI,Viral LRTI,Male,0.31211499,,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,5385.681559,NA,0.269948463
+P2,LRTI,Bacterial/viral LRTI,Female,0.1889117,RSV,Streptococcus pneumoniae,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Streptococcus pneumoniae,,1658.087477,1786.613584,0.695002186
+P3,LRTI,Bacterial/viral LRTI,Male,0.183436,RSV,,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,311.3182831,61093.4686,0.170374158
+P4,LRTI,Bacterial/viral LRTI,Female,0.15331964,RSV,Coronavirus,Moraxella catarrhalis,,,Human orthopneumovirus,,,,,,92.68167928,NA,2.933842549
+P5,LRTI,Bacterial/viral LRTI,Female,0.21355236,RSV,Streptococcus pneumoniae,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,133.9468104,38.26489337,0.893575337
+P6,LRTI,Bacterial/viral LRTI,Female,0.10677618,RSV,Klebsiella pneumoniae,E. coli,,,Human orthopneumovirus,,,,,,296.9652498,NA,0.803196745
+P7,LRTI,Bacterial/viral LRTI,Male,0.15331964,RSV,Haemophilus influenzae,Streptococcus pneumoniae,,,Human orthopneumovirus,,,,Haemophilus influenzae,,22.91823154,1770.139939,0.107403894
+P8,LRTI,Bacterial/viral LRTI,Male,0.10403833,RSV,Moraxella catarrhalis,E. coli,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,5170.632489,117.8641678,0.107892489
+P9,LRTI,Bacterial/viral LRTI,Male,1.83983573,RSV,,,,,Human orthopneumovirus,Primate bocaparvovirus 1,Human bocavirus,,Haemophilus influenzae,,156.0827373,768.0288604,2.315345313
+P10,LRTI,Bacterial/viral LRTI,Male,0.43531828,RSV,E. coli,Strep viridans,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,1733.321401,NA,0.055805182
+P11,LRTI,Bacterial LRTI,Male,0.08213552,,,,,,,,,,Haemophilus influenzae,,NA,128.3192899,0
+P12,LRTI,Viral LRTI,Male,4.85420945,Influenza A virus,,,,,Influenza A virus,,,,,,21.24598291,NA,2.542811911
+P13,LRTI,Viral LRTI,Male,12.514716,,,,,,Human orthopneumovirus,,,,,,2.035729169,NA,2.265761401
+P14,LRTI,Bacterial/viral LRTI,Female,0.60506502,RSV,Adenovirus,Haemophilus influenzae,,,Human orthopneumovirus,,,,Haemophilus influenzae,,48.49011693,16.77373119,1.740429351
+P15,LRTI,Bacterial/viral LRTI,Female,0.19986311,RSV,Haemophilus influenzae,,,,,,,,Haemophilus influenzae,,NA,119695.8039,0.194535374
+P16,LRTI,Viral LRTI,Male,0.1615332,,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,8275.094798,NA,0.688041726
+P17,IPC,Bacterial IPC,Male,14.201232,Haemophilus influenzae,Enterococcus faecalis,,,,,,,,Haemophilus influenzae,,NA,701.6926997,3.211618575
+P18,CTRL,CTRL,Female,11.1786448,,,,,,,,,,,,NA,NA,1.4965844
+P19,CTRL,CTRL,Female,15.5893224,,,,,,,,,,,,NA,NA,1.521619871
+P20,IPC,Viral IPC,Male,1.28131417,,,,,,Human coronavirus 229E,,,,,,53.97946292,NA,2.136162269
+P21,LRTI,Viral LRTI,Female,5.93292266,Adenovirus,,,,,Rhinovirus C,,,,,,19.80029828,NA,2.094462067
+P22,IPC,Bacterial/viral IPC,Female,0.25735797,,,,,,Human rhinovirus sp.,Rhinovirus A,,,Moraxella catarrhalis,,898.5952269,2308.361708,0.596462671
+P23,LRTI,Bacterial/viral LRTI,Male,0.43258042,Influenza B virus,,,,,Influenza B virus,,,,Moraxella catarrhalis,,218.8976923,5160.774291,1.628308733
+P24,LRTI,Viral LRTI,Male,12.9253936,,,,,,Rhinovirus A,,,,,,120.7123175,NA,1.647373584
+P25,CTRL,CTRL,Male,5.45379877,,,,,,,,,,,,NA,NA,1.208975623
+P26,IPC,Bacterial IPC,Male,0.53114305,,,,,,,,,,Staphylococcus aureus,,NA,101.8002449,0.093394589
+P27,LRTI,Bacterial LRTI,Female,7.73716632,,,,,,,,,,Moraxella catarrhalis,Streptococcus pneumoniae,NA,7.914724701,1.55853635
+P28,IPC,Bacterial IPC,Female,1.45106092,,,,,,,,,,Bordetella parapertussis,,NA,21762.21709,0.720649796
+P29,LRTI,Bacterial/viral LRTI,Male,0.22450377,RSV,Streptococcus pneumoniae,Staphylococcus aureus,,,Human orthopneumovirus,Respiratory syncytial virus,,,Streptococcus pneumoniae,,862.1321354,95.87061956,0.404309581
+P30,LRTI,Bacterial/viral LRTI,Male,0.23545517,Haemophilus influenzae,,,,,Human rhinovirus sp.,Rhinovirus A,,,Haemophilus influenzae,,92.69852861,84.61114208,0.704252516
+P31,LRTI,Viral LRTI,Male,7.6550308,Influenza A virus,,,,,Influenza A virus,,,,,,0.778749522,NA,3.217961209
+P32,LRTI,Viral LRTI,Male,0.85968515,RSV,,,,,Human orthopneumovirus,Rhinovirus A,Respiratory syncytial virus,,,,816.5103309,NA,0.280341661
+P33,LRTI,Bacterial/viral LRTI,Female,0.13141684,Moraxella catarrhalis,,,,,Rhinovirus A,Enterovirus sp.,,,,,598.0958321,NA,0.071525451
+P34,LRTI,Bacterial/viral LRTI,Male,0.18069815,RSV,Moraxella catarrhalis,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,992.3474416,NA,0.504497727
+P35,IPC,Bacterial/viral IPC,Male,0.20807666,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Haemophilus influenzae,,1109.401538,147.0581799,0.457619279
+P36,LRTI,Bacterial/viral LRTI,Male,0.14784394,RSV,Moraxella catarrhalis,Strep viridans,,,Human orthopneumovirus,,,,Moraxella catarrhalis,,236.6646351,1062.61054,0.56550506
+P37,LRTI,Bacterial/viral LRTI,Male,0.16974675,RSV,Coronavirus,,,,Human orthopneumovirus,Betacoronavirus 1,Human metapneumovirus,Respiratory syncytial virus,Haemophilus influenzae,,1350.165065,61.03429363,0.923268154
+P38,LRTI,Bacterial/viral LRTI,Female,0.09308693,RSV,Streptococcus pneumoniae,Moraxella catarrhalis,,,Human orthopneumovirus,Respiratory syncytial virus,,,Streptococcus pneumoniae,,1089.29533,7.105667438,0.040192513
+P39,LRTI,Bacterial/viral LRTI,Female,0.15331964,RSV,Moraxella catarrhalis,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,1761.048782,1228.160455,0.849447065
+P40,LRTI,Bacterial/viral LRTI,Male,0.26830938,HMPV,Streptococcus pneumoniae,Moraxella catarrhalis,,,Human metapneumovirus,,,,Haemophilus influenzae,,17.31153172,5571.901243,0.223723913
+P41,LRTI,Bacterial/viral LRTI,Male,0.12320329,RSV,Moraxella catarrhalis,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,6092.905953,5.696130773,0.015078837
+P42,LRTI,Bacterial/viral LRTI,Male,0.29295003,RSV,Moraxella catarrhalis,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,4136.188038,31.73318862,0.148242618
+P43,IPC,Bacterial/viral IPC,Male,0.32580424,Adenovirus,Moraxella catarrhalis,,,,,,,,Moraxella catarrhalis,,NA,13521.60457,0.186751372
+P44,LRTI,Bacterial/viral LRTI,Male,0.23271732,Moraxella catarrhalis,Strep viridans,,,,Human orthopneumovirus,,,,Moraxella catarrhalis,,3.276340406,37.33662921,0.602703938
+P45,LRTI,Bacterial/viral LRTI,Male,0.10130048,RSV,Moraxella catarrhalis,Streptococcus pneumoniae,Staphylococcus aureus,Enterobacter cloacae,Human orthopneumovirus,,,,Moraxella catarrhalis,,862.9394214,4015.138529,0.617475571
+P46,LRTI,Bacterial/viral LRTI,Male,0.10130048,,,,,,Human orthopneumovirus,,,,Moraxella catarrhalis,,245.4632919,1446.480659,0.752965194
+P47,LRTI,Viral LRTI,Female,0.5284052,,,,,,Human bocavirus,,,,,,16.70402477,NA,0.200881471
+P48,IPC,Bacterial IPC,Male,2.46954141,,,,,,,,,,Haemophilus influenzae,Moraxella catarrhalis,NA,1509.743155,2.08206847
+P49,LRTI,Bacterial/viral LRTI,Male,3.02806297,RSV,Streptococcus pneumoniae,,,,,,,,Streptococcus pneumoniae,,NA,5.588061219,0.641864285
+P50,LRTI,Bacterial/viral LRTI,Male,0.14236824,RSV,,,,,Human orthopneumovirus,Human respirovirus 3,,,Moraxella catarrhalis,,184.8426822,617.3145434,0.55123465
+P51,LRTI,Bacterial LRTI,Male,16.2436687,Staphylococcus aureus,,,,,,,,,Fusobacterium nucleatum,,NA,1.755329007,1.725082895
+P52,LRTI,Bacterial LRTI,Male,10.0095825,Moraxella catarrhalis,Staphylococcus aureus,Haemophilus influenzae,,,,,,,Moraxella catarrhalis,Haemophilus influenzae,NA,1396.560686,0.673641311
+P53,IPC,Bacterial/viral IPC,Male,6.55989049,Adenovirus,Parainfluenza 2,Haemophilus influenzae,,,Rhinovirus A,,,,Haemophilus influenzae,,73.26207367,3347.167247,0.152472156
+P54,LRTI,Bacterial/viral LRTI,Female,1.00752909,RSV,Haemophilus influenzae,Moraxella catarrhalis,,,,,,,Haemophilus influenzae,,NA,143872.2129,0.3395662
+P55,LRTI,Bacterial/viral LRTI,Male,0.10677618,RSV,Moraxella catarrhalis,Staphylococcus aureus,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,2171.770288,2589.090407,0.699653099
+P56,LRTI,Bacterial LRTI,Male,13.377139,Streptococcus pneumoniae,,,,,,,,,Streptococcus pneumoniae,,NA,48.42740978,0
+P57,LRTI,Bacterial/viral LRTI,Female,0.74743327,RSV,Haemophilus influenzae,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,9.485226981,22.60498019,0.607072694
+P58,LRTI,Bacterial/viral LRTI,Male,0.10677618,RSV,Haemophilus influenzae,Staphylococcus aureus,,,Human orthopneumovirus,,,,Haemophilus influenzae,,102.7583038,77.75588051,0.683524221
+P59,LRTI,Bacterial/viral LRTI,Male,1.14442163,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Haemophilus influenzae,,2259.175479,4.369658773,0.015916855
+P60,LRTI,Bacterial/viral LRTI,Female,0.15331964,RSV,Coronavirus,Moraxella catarrhalis,Haemophilus influenzae,,Human orthopneumovirus,,,,Haemophilus influenzae,,74.36480022,37757.43332,0.300283116
+P61,LRTI,Viral LRTI,Male,1.04312115,,,,,,Primate bocaparvovirus 1,Human bocavirus,,,,,3.043017855,NA,1.484462947
+P62,IPC,Bacterial/viral IPC,Male,1.34154689,,,,,,Human orthopneumovirus,,,,Moraxella catarrhalis,,0.168523197,580.5118562,2.167972073
+P63,LRTI,Bacterial/viral LRTI,Male,0.26557153,RSV,Moraxella catarrhalis,,,,Human orthopneumovirus,,,,Bacteroides fragilis,Moraxella catarrhalis,1510.271295,5.749642711,0.039990742
+P64,IPC,Viral IPC,Female,2.74332649,,,,,,Rhinovirus C,,,,,,32.56445497,NA,0.978662807
+P65,LRTI,Bacterial LRTI,Female,4.42710472,,,,,,,,,,Moraxella catarrhalis,,NA,14.77886532,0
+P66,LRTI,Bacterial LRTI,Male,0.31759069,Bordetella pertussis,,,,,,,,,Bordetella pertussis,,NA,353914.1253,0.051379486
+P67,LRTI,Bacterial LRTI,Female,0.70910335,Strep viridans,E. coli,,,,,,,,,,NA,NA,0.62512527
+P68,IPC,Viral IPC,Male,2.38740589,,,,,,Human rhinovirus sp.,Rhinovirus A,,,,,1.156044372,NA,1.871294872
+P69,LRTI,Viral LRTI,Female,0.16974675,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,2517.831427,NA,0.058593104
+P70,LRTI,Viral LRTI,Female,1.11156742,RSV,,,,,Human orthopneumovirus,,,,,,269.1638296,NA,0.867591815
+P71,LRTI,Bacterial/viral LRTI,Female,3.19507187,Parainfluenza 4,Staphylococcus aureus,,,,Human orthorubulavirus 4,,,,Haemophilus influenzae,,295.3157306,349.8365099,1.122000131
+P72,LRTI,Viral LRTI,Male,0.47364819,,,,,,Rhinovirus B,Enterovirus B,,,,,124.0356035,NA,1.322366081
+P73,LRTI,Bacterial/viral LRTI,Female,0.26557153,RSV,,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,39.28686758,123.6867752,0.56298403
+P74,IPC,Bacterial IPC,Female,0.08487337,Staphylococcus aureus,,,,,,,,,,,NA,NA,0.154603572
+P75,LRTI,Bacterial LRTI,Male,0.48733744,Moraxella catarrhalis,,,,,,,,,,,NA,NA,1.282420012
+P76,LRTI,Bacterial LRTI,Male,4.99657769,,,,,,,,,,Moraxella catarrhalis,,NA,337.9213353,0.174818942
+P77,LRTI,Bacterial/viral LRTI,Male,2.89664613,RSV,Haemophilus influenzae,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,17.45073433,20264.95772,0.023164316
+P78,LRTI,Bacterial/viral LRTI,Female,4.73374401,,,,,,Rhinovirus B,,,,Haemophilus influenzae,,7.651941888,44.91101277,0.758033707
+P79,IPC,Bacterial IPC,Male,0.89801506,Pseudomonas aeruginosa,,,,,,,,,Pseudomonas aeruginosa,,NA,2885.949515,2.155387019
+P80,IPC,Bacterial IPC,Male,11.2963724,E. coli,Enterobacter aerogenes,,,,,,,,,,NA,NA,2.233721088
+P81,LRTI,Viral LRTI,Male,4.39972622,,,,,,Rhinovirus C,,,,,,212.3906036,NA,0.820332266
+P82,CTRL,CTRL,Male,5.32238193,,,,,,,,,,,,NA,NA,2.115172509
+P83,IPC,Viral IPC,Male,1.41820671,,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,31.6990556,NA,2.776369145
+P84,LRTI,Viral LRTI,Female,0.53935661,,,,,,Rhinovirus C,,,,,,4202.429497,NA,0.005405214
+P85,LRTI,Viral LRTI,Male,0.41889117,RSV,,,,,Rhinovirus A,,,,,,4.74253157,NA,1.869205721
+P86,LRTI,Viral LRTI,Male,6.04243669,,,,,,Rhinovirus C,,,,,,286.3148928,NA,0.018331505
+P87,LRTI,Viral LRTI,Male,7.62765229,RSV,,,,,Human orthopneumovirus,,,,,,246.1573202,NA,0.008815084
+P88,LRTI,Bacterial/viral LRTI,Male,0.41615332,Parainfluenza 1,Haemophilus influenzae,Moraxella catarrhalis,,,,,,,Haemophilus influenzae,,NA,20516.90047,0.006628008
+P89,IPC,Bacterial/viral IPC,Male,1.68104038,,,,,,Rhinovirus A,,,,Moraxella catarrhalis,Haemophilus influenzae,0.586661833,68.84109942,2.595593883
+P90,LRTI,Bacterial/viral LRTI,Female,0.96098563,Adenovirus,,,,,Rhinovirus C,,,,Moraxella catarrhalis,,21.882183,246.5294711,0.759706529
+P91,CTRL,CTRL,Male,2.93497604,,,,,,,,,,,,NA,NA,2.557889424
+P92,IPC,Bacterial IPC,Male,16.5448323,,,,,,,,,,Pseudomonas aeruginosa,,NA,16329.24843,0.237191781
+P93,CTRL,CTRL,Female,0.38877481,,,,,,,,,,,,NA,NA,1.482604863
+P94,IPC,Viral IPC,Female,2.35728953,RSV,,,,,,,,,,,NA,NA,2.923543794
+P95,LRTI,Bacterial LRTI,Male,1.45106092,,,,,,,,,,Mycoplasma pneumoniae,,NA,6338.382531,0
+P96,CTRL,CTRL,Male,14.0260096,,,,,,,,,,,,NA,NA,2.735629932
+P97,CTRL,CTRL,Female,2.18754278,,,,,,,,,,,,NA,NA,1.526721234
+P98,IPC,Viral IPC,Female,14.3436003,,,,,,Rhinovirus C,Human rhinovirus sp.,,,,,24803.54012,1.671148229,0.002829446
+P99,IPC,Viral IPC,Male,0.49281314,,,,,,Rhinovirus C,Human rhinovirus sp.,,,,,16699.11042,1.6369986,0.001250002
+P100,CTRL,CTRL,Male,0.58863792,,,,,,,,,,,,NA,NA,1.252082178
+P101,CTRL,CTRL,Female,0.55578371,,,,,,,,,,,,NA,NA,2.289169786
+P102,LRTI,Bacterial/viral LRTI,Male,0.19438741,RSV,Haemophilus influenzae,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,656.7774609,52.38786881,0.26422246
+P103,LRTI,Bacterial/viral LRTI,Male,0.53935661,Adenovirus,Moraxella catarrhalis,,,,Human orthopneumovirus,Rhinovirus A,,,Moraxella catarrhalis,,326.7590663,90.69009426,0.52762668
+P104,LRTI,Bacterial/viral LRTI,Male,0.24093087,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,Streptococcus pneumoniae,1000.665255,123.9028692,0.440202026
+P105,LRTI,Bacterial LRTI,Female,4.93908282,,,,,,,,,,Pseudomonas aeruginosa,,NA,925.4265706,0.647212521
+P106,IPC,Bacterial IPC,Male,8.80766598,,,,,,,,,,Pseudomonas aeruginosa,,NA,1803.318193,2.194290015
+P107,CTRL,CTRL,Male,16.2737851,,,,,,,,,,,,NA,NA,2.313229885
+P108,LRTI,Bacterial LRTI,Female,8.45995893,,,,,,,,,,Moraxella catarrhalis,,NA,276.0144991,0.924031061
+P109,LRTI,Viral LRTI,Female,4.23819302,RSV,,,,,Human orthorubulavirus 4,,,,,,71.79523318,561.0383877,0.414986408
+P110,CTRL,CTRL,Female,0.96372348,,,,,,,,,,,,NA,NA,2.467969618
+P111,IPC,Bacterial IPC,Male,12.5174538,,,,,,,,,,Moraxella catarrhalis,,NA,181.0713518,2.185713987
+P112,CTRL,CTRL,Female,17.2183436,,,,,,,,,,,,NA,NA,1.028287742
+P113,LRTI,Bacterial/viral LRTI,Male,0.7063655,Haemophilus influenzae,,,,,Human orthopneumovirus,Parechovirus A,Respiratory syncytial virus,,,,2411.253866,NA,2.47146024
+P114,CTRL,CTRL,Male,1.65639973,,,,,,,,,,,,NA,NA,1.626118221
+P115,IPC,Bacterial IPC,Female,15.1403149,Staphylococcus aureus,,,,,,,,,,,NA,NA,2.471731316
+P116,LRTI,Bacterial/viral LRTI,Male,0.33675565,RSV,Haemophilus influenzae,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,76.76179557,729.4506463,0.314435395
+P117,CTRL,CTRL,Female,16.7583847,,,,,,,,,,,,NA,NA,1.656237938
+P118,LRTI,Viral LRTI,Male,0.81587954,RSV,,,,,Human orthopneumovirus,,,,,,166.1723321,NA,0.133762024
+P119,LRTI,Bacterial/viral LRTI,Female,0.91170431,RSV,Haemophilus influenzae,Streptococcus pneumoniae,,,Human orthopneumovirus,Human respirovirus 1,,,Haemophilus influenzae,,109.8018079,5.800242235,0.276147195
+P120,LRTI,Bacterial/viral LRTI,Male,0.10403833,RSV,Moraxella catarrhalis,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,6151.678703,NA,0.00116935
+P121,LRTI,Viral LRTI,Female,3.96988364,Adenovirus,HMPV,,,,Human metapneumovirus,Human mastadenovirus B,,,,,595.0794883,NA,0.197140103
+P122,LRTI,Bacterial LRTI,Male,9.76317591,,,,,,,,,,Escherichia coli,,NA,4.811108863,1.165128992
+P123,LRTI,Bacterial/viral LRTI,Male,0.58863792,RSV,Moraxella catarrhalis,,,,Human orthopneumovirus,,,,Moraxella catarrhalis,,697.0082684,1916.442423,0.593568231
+P124,LRTI,Bacterial/viral LRTI,Male,0.30390144,RSV,Haemophilus influenzae,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,181.5914813,8516.46276,0.114403032
+P125,LRTI,Viral LRTI,Male,0.14236824,RSV,,,,,Human orthopneumovirus,,,,,,979.3430745,NA,0.000735042
+P126,LRTI,Bacterial/viral LRTI,Male,0.5174538,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Haemophilus influenzae,,2944.535422,20.31460855,0.062905935
+P127,LRTI,Bacterial/viral LRTI,Female,0.1615332,RSV,Streptococcus pneumoniae,Moraxella catarrhalis,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,3462.898139,9853.58414,0.702130899
+P128,LRTI,Viral LRTI,Female,0.54209446,RSV,Coronavirus,,,,Human orthopneumovirus,,,,,,83.10170131,NA,1.505231738
+P129,LRTI,Bacterial/viral LRTI,Male,1.87542779,RSV,Parainfluenza 1,,,,Human orthopneumovirus,Human respirovirus 1,,,Haemophilus influenzae,,895.7078726,30.52109239,0.380783773
+P130,LRTI,Bacterial/viral LRTI,Male,2.17659138,Adenovirus,HMPV,Staphylococcus aureus,,,Human metapneumovirus,,,,Haemophilus influenzae,,1.099401899,336.9143296,0.262088551
+P131,LRTI,Bacterial/viral LRTI,Female,0.5284052,RSV,Haemophilus influenzae,,,,Human orthopneumovirus,Betacoronavirus 1,,,Haemophilus influenzae,,392.8046919,5.056245911,0.322809092
+P132,LRTI,Bacterial/viral LRTI,Female,0.10130048,RSV,Moraxella catarrhalis,Beta hemolytic strep,,,Human orthopneumovirus,,,,Moraxella catarrhalis,,116.8112706,14.92367476,0.417021264
+P133,LRTI,Bacterial/viral LRTI,Male,1.70568104,,,,,,Human metapneumovirus,,,,Haemophilus influenzae,,957.3541922,36.01197124,0.190805027
+P134,LRTI,Bacterial/viral LRTI,Female,0.62970568,RSV,,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,50.81714093,52.4490337,0.752177392
+P135,LRTI,Bacterial/viral LRTI,Male,1.29774127,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Haemophilus influenzae,,546.1652458,2.620808822,0.032529723
+P136,LRTI,Viral LRTI,Male,0.10130048,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,1545.906717,NA,0.271790293
+P137,LRTI,Bacterial/viral LRTI,Male,0.09308693,RSV,Haemophilus influenzae,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,152.0776233,610.2951497,0.499679798
+P138,LRTI,Viral LRTI,Male,4.08213552,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,4393.466132,NA,0.095822274
+P139,LRTI,Bacterial/viral LRTI,Male,1.33333333,RSV,Adenovirus,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,15843.62768,16.14034686,0.01418898
+P140,IPC,Viral IPC,Male,0.14510609,,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,1560.880155,NA,0.001684762
+P141,LRTI,Viral LRTI,Male,1.11430527,,,,,,Primate bocaparvovirus 1,Human bocavirus,,,,,64.49997393,NA,0.341739362
+P142,CTRL,CTRL,Male,0.39698836,,,,,,,,,,,,NA,NA,2.156215073
+P143,IPC,Viral IPC,Female,0.89801506,,,,,,Human orthopneumovirus,Rhinovirus C,,,,,5.601370843,NA,1.540241587
+P144,IPC,Bacterial/viral IPC,Male,7.05270363,,,,,,Rhinovirus C,,,,Moraxella catarrhalis,,24.62651718,13572.4119,0.326786372
+P145,IPC,Bacterial IPC,Female,12.8569473,,,,,,,,,,Moraxella catarrhalis,,NA,47770.04621,1.061693021
+P146,CTRL,CTRL,Female,4.04106776,,,,,,,,,,,,NA,NA,1.117992606
+P147,LRTI,Bacterial/viral LRTI,Female,0.55578371,Adenovirus,,,,,Human bocavirus,,,,Moraxella catarrhalis,,18.14386128,31.23668426,1.117309367
+P148,LRTI,Viral LRTI,Male,0.58316222,,,,,,Human rhinovirus sp.,Rhinovirus A,,,,,4118.47369,NA,0.220828939
+P149,IPC,Viral IPC,Female,4.29021218,,,,,,Rhinovirus C,,,,,,1.506330847,NA,2.070746608
+P150,CTRL,CTRL,Male,17.7823409,,,,,,,,,,,,NA,NA,2.161297507
+P151,LRTI,Bacterial/viral LRTI,Male,0.53935661,Staphylococcus aureus,,,,,Human betaherpesvirus 5,,,,Staphylococcus aureus,,0.501476409,1377.472117,0.021956855
+P152,LRTI,Viral LRTI,Female,3.91512663,,,,,,Rhinovirus C,,,,,,2260.702347,NA,0.027733646
+P153,LRTI,Viral LRTI,Male,1.86995209,RSV,,,,,Human orthopneumovirus,Human mastadenovirus B,,,,,129.3654301,NA,0.014394677
+P154,LRTI,Viral LRTI,Male,0.28473648,,,,,,Rhinovirus C,,,,,,935.1235701,NA,0.546120712
+P155,LRTI,Bacterial LRTI,Male,0.8569473,,,,,,,,,,Moraxella catarrhalis,,NA,20746.20282,2.650801165
+P156,CTRL,CTRL,Female,4.66255989,,,,,,,,,,,,NA,NA,0
+P157,LRTI,Bacterial/viral LRTI,Male,1.43737166,Influenza A virus,,,,,Influenza A virus,,,,Streptococcus pyogenes,,24.40902706,1.497207979,0.519768254
+P158,LRTI,Bacterial/viral LRTI,Female,0.21355236,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Haemophilus influenzae,,2096.901152,2.771039687,0.019126993
+P159,LRTI,Viral LRTI,Female,0.14236824,,,,,,Rhinovirus C,,,,,,52.76577718,NA,2.295405153
+P160,LRTI,Bacterial/viral LRTI,Female,1.12251882,Staphylococcus aureus,,,,,Human metapneumovirus,,,,Escherichia coli,,0.390504169,50.42385078,0.551865794
+P161,LRTI,Viral LRTI,Male,0.79123888,Parainfluenza 1,,,,,Rhinovirus A,,,,,,3219.027198,NA,0.003229656
+P162,LRTI,Bacterial/viral LRTI,Female,0.12320329,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,747.408738,511.4603716,0.717085876
+P163,LRTI,Bacterial/viral LRTI,Male,2.39014374,RSV,Moraxella catarrhalis,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,1628.080471,30995.34669,0.352101311
+P164,LRTI,Viral LRTI,Male,1.19644079,,,,,,Parechovirus A,Rhinovirus C,Human rhinovirus sp.,,,,18021.02067,NA,0.002189484
+P165,LRTI,Viral LRTI,Male,1.13620808,HMPV,,,,,Human metapneumovirus,,,,,,6.994737231,NA,1.822927915
+P166,LRTI,Bacterial/viral LRTI,Male,0.64339494,RSV,Streptococcus pneumoniae,,,,Human orthopneumovirus,,,,Streptococcus pneumoniae,,402.0792254,12.59100872,0.249417038
+P167,LRTI,Bacterial/viral LRTI,Male,3.88774812,Rhinovirus,Streptococcus pneumoniae,Staphylococcus aureus,,,Human orthorubulavirus 2,,,,,,10.35954006,NA,2.045456242
+P168,CTRL,CTRL,Female,9.50855578,,,,,,,,,,,,NA,NA,0.361861549
+P169,LRTI,Bacterial/viral LRTI,Female,0.56125941,RSV,Haemophilus influenzae,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,78.16891529,20618.03051,0.027317841
+P170,LRTI,Viral LRTI,Female,1.82340862,Adenovirus,Coronavirus,RSV,,,Human orthopneumovirus,,,,,,96.84351242,NA,0.090153286
+P171,LRTI,Viral LRTI,Female,3.15126626,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,23.45754982,NA,1.461284176
+P172,CTRL,CTRL,Male,15.7152635,,,,,,,,,,,,NA,NA,2.112819047
+P173,LRTI,Bacterial LRTI,Female,0.20260096,Staphylococcus aureus,,,,,,,,,Moraxella catarrhalis,,NA,17.21585447,0.5044601
+P174,LRTI,Bacterial/viral LRTI,Male,1.76865161,RSV,,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,600.7713573,56.17373447,0.321275878
+P175,LRTI,Bacterial/viral LRTI,Male,0.57768652,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Haemophilus influenzae,,603.049419,2.065627134,0.028968445
+P176,LRTI,Bacterial/viral LRTI,Female,0.37234771,RSV,,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,76.49956435,48.9360106,0.885259164
+P177,LRTI,Bacterial/viral LRTI,Male,0.6844627,RSV,Moraxella catarrhalis,,,,Human orthopneumovirus,,,,Moraxella catarrhalis,,150.5616775,440.36321,0.811747902
+P178,LRTI,Bacterial/viral LRTI,Female,0.37234771,RSV,,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,29.05039703,599.0841509,0.293522019
+P179,LRTI,Bacterial/viral LRTI,Female,0.5065024,,,,,,Human rhinovirus sp.,Rhinovirus A,,,Haemophilus influenzae,,939.3058208,36.9225076,0.169095379
+P180,LRTI,Viral LRTI,Male,0.24366872,,,,,,Human rhinovirus sp.,Rhinovirus A,,,,,19135.96617,NA,0.002190578
+P181,LRTI,Bacterial/viral LRTI,Female,1.96851472,Parainfluenza 3,,,,,Human respirovirus 3,,,,Streptococcus pyogenes,,0.276192662,11.61981985,0.110308864
+P182,IPC,Viral IPC,Female,0.24093087,,,,,,Rhinovirus A,,,,,,2.511090459,NA,2.640781967
+P183,IPC,Bacterial/viral IPC,Female,1.30869268,Staphylococcus aureus,,,,,Human coronavirus NL63,Parechovirus A,,,,,16.14205381,NA,2.333699416
+P184,IPC,Bacterial IPC,Male,1.96303901,,,,,,,,,,Haemophilus influenzae,,NA,20.10441165,2.137422073
+P185,IPC,Bacterial/viral IPC,Female,6.09445585,Influenza A,Pseudomonas aeruginosa,,,,Influenza A virus,,,,Fusobacterium nucleatum,,720.8139915,1.882925004,0.039585561
+P186,IPC,Bacterial IPC,Female,4.02464066,Staphylococcus aureus,,,,,,,,,,,NA,NA,1.911833021
+P187,IPC,Bacterial/viral IPC,Female,3.01437372,,,,,,Human coronavirus NL63,,,,Pseudomonas aeruginosa,,73.68307161,633.4834805,1.926534833
+P188,LRTI,Viral LRTI,Male,2.19028063,RSV,Adenovirus,,,,Human orthopneumovirus,,,,,,98.87054905,NA,2.332759021
+P189,LRTI,Viral LRTI,Female,15.97260274,HMPV,,,,,Human metapneumovirus,,,,,,20.89751666,NA,0.222736807
+P190,CTRL,CTRL,Male,6.85010267,,,,,,,,,,,,NA,NA,2.108456557
+P191,IPC,Bacterial/viral IPC,Male,1.59069131,Parainfluenza 3,Rhinovirus,,,,Human respirovirus 3,,,,Haemophilus influenzae,Moraxella catarrhalis,3006.453431,19894.02865,1.17766317
+P192,IPC,Bacterial IPC,Male,3.94250513,,,,,,,,,,Haemophilus influenzae,,NA,34.20213864,0.389397342
+P193,CTRL,CTRL,Male,0.37508556,,,,,,,,,,,,NA,NA,1.334084758
+P194,LRTI,Bacterial/viral LRTI,Female,10.7816564,Parainfluenza 2,Rhinovirus,Streptococcus pneumoniae,,,Human orthorubulavirus 2,Rhinovirus C,,,,,267.010062,NA,0.480692478
+P195,LRTI,Viral LRTI,Female,0.94729637,RSV,,,,,Human bocavirus,,,,,,26.76450393,NA,2.365892738
+P196,CTRL,CTRL,Female,1.27310062,,,,,,,,,,,,NA,NA,0.376052985
+P197,LRTI,Bacterial/viral LRTI,Female,1.48939083,,,,,,Human rhinovirus sp.,Rhinovirus A,,,Streptococcus pneumoniae,,253.2375873,1.085924474,0.109360352
+P198,IPC,Bacterial/viral IPC,Female,0.21902806,RSV,,,,,Human orthopneumovirus,,,,Streptococcus pneumoniae,,64.43912574,36.74427057,3.821741067
+P199,LRTI,Bacterial LRTI,Male,0.64613279,,,,,,,,,,Moraxella catarrhalis,,NA,34103.32075,0.341191459
+P200,LRTI,Bacterial LRTI,Male,16.6160164,,,,,,,,,,Mycoplasma pneumoniae,,NA,3320.089935,0
+P201,CTRL,CTRL,Male,6.05065024,,,,,,,,,,,,NA,NA,3.874624562
+P202,CTRL,CTRL,Female,1.27857632,,,,,,,,,,,,NA,NA,1.894644973
+P203,CTRL,CTRL,Male,12.3394935,,,,,,,,,,,,NA,NA,3.699863175
+P204,IPC,Viral IPC,Male,1.45927447,,,,,,Rhinovirus C,Human rhinovirus sp.,,,,,10804.89065,NA,0.000920886
+P205,IPC,Viral IPC,Male,1.30869268,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,764.6134674,NA,0.089661412
+P206,IPC,Bacterial IPC,Male,1.5578371,Staphylococcus aureus,,,,,,,,,,,NA,NA,2.466509337
+P207,LRTI,Viral LRTI,Female,4.06297057,,,,,,Rhinovirus A,,,,,,0.60508744,NA,1.690440569
+P208,LRTI,Bacterial/viral LRTI,Female,3.26899384,Pseudomonas aeruginosa,,,,,Human orthopneumovirus,,,,,,179.0342825,NA,3.341732232
+P209,LRTI,Bacterial/viral LRTI,Male,0.28747433,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Streptococcus pneumoniae,,6467.887925,16.48776788,0.059610228
+P210,IPC,Bacterial IPC,Female,1.32511978,,,,,,,,,,Serratia marcescens,,NA,36959.43511,0.529278584
+P211,CTRL,CTRL,Female,16.2737851,,,,,,,,,,,,NA,NA,1.796031279
+P212,IPC,Bacterial/viral IPC,Female,1.28131417,,,,,,Rhinovirus A,,,,Moraxella catarrhalis,,8.64534495,80.16714441,2.139247863
+P213,IPC,Viral IPC,Male,3.38398357,,,,,,Influenza C virus,,,,,,352.4908755,NA,2.914334685
+P214,IPC,Bacterial IPC,Female,3.52087611,,,,,,,,,,Pseudomonas aeruginosa,,NA,26.40692249,2.564137152
+P215,IPC,Viral IPC,Female,1.09514032,,,,,,Human rhinovirus sp.,Rhinovirus A,,,,,308.3456001,NA,3.494633877
+P216,IPC,Bacterial IPC,Female,0.82956879,,,,,,,,,,Haemophilus influenzae,,NA,514.5178348,1.871101687
+P217,CTRL,CTRL,Female,14.017796,,,,,,,,,,,,NA,NA,2.16946883
+P218,CTRL,CTRL,Male,0.10403833,,,,,,,,,,,,NA,NA,2.911685889
+P219,IPC,Bacterial IPC,Male,15.2443532,,,,,,,,,,Proteus mirabilis,Fusobacterium nucleatum,NA,107.4606511,2.908747062
+P220,LRTI,Bacterial/viral LRTI,Male,0.09308693,RSV,E. coli,Staphylococcus aureus,Beta hemolytic strep,,Human orthopneumovirus,Respiratory syncytial virus,,,,,4021.056252,NA,0.032705905
+P221,LRTI,Bacterial/viral LRTI,Female,0.12594114,RSV,Coronavirus,Streptococcus pneumoniae,Moraxella catarrhalis,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,1939.324022,18.23706755,0.057085249
+P222,LRTI,Bacterial LRTI,Female,0.09034908,Haemophilus influenzae,,,,,,,,,Haemophilus influenzae,,NA,130.2431752,0.046569256
+P223,LRTI,Bacterial LRTI,Male,0.47364819,Moraxella catarrhalis,,,,,,,,,Moraxella catarrhalis,,NA,245.1642148,0
+P224,LRTI,Bacterial/viral LRTI,Male,15.7015743,Parainfluenza 3,Haemophilus influenzae,,,,Human respirovirus 3,,,,Haemophilus influenzae,,6678.659228,169.0134073,0.115932317
+P225,LRTI,Bacterial/viral LRTI,Male,0.28473648,,,,,,Influenza C virus,,,,Haemophilus influenzae,,3132.559879,22.69424578,0.044325641
+P226,LRTI,Bacterial/viral LRTI,Female,1.01574264,Adenovirus,,,,,Rhinovirus A,,,,Moraxella catarrhalis,,1271.459499,16.72235491,0.08034686
+P227,LRTI,Bacterial/viral LRTI,Female,1.71937029,RSV,Adenovirus,Haemophilus influenzae,,,Human orthopneumovirus,,,,,,596.1340806,NA,0.254969885
+P228,LRTI,Bacterial LRTI,Male,2.67488022,,,,,,,,,,Haemophilus influenzae,,NA,2.031762001,0.659959588
+P229,LRTI,Viral LRTI,Female,14.4175223,Parainfluenza 1,,,,,Human respirovirus 1,,,,,,3645.493253,NA,0
+P230,LRTI,Bacterial/viral LRTI,Female,8.07939767,,,,,,Human respirovirus 1,,,,Pseudomonas aeruginosa,,197.0485828,12.7422469,0.285767469
+P231,LRTI,Viral LRTI,Male,1.31416838,,,,,,Rhinovirus C,,,,,,417.560935,NA,0
+P232,LRTI,Viral LRTI,Female,5.71115674,Influenza B virus,Parainfluenza 3,,,,,,,,,,NA,NA,1.12973429
+P233,LRTI,Viral LRTI,Female,5.85626283,,,,,,Rhinovirus A,,,,,,555.8836579,NA,0.752199102
+P234,LRTI,Bacterial LRTI,Male,13.24846,Serratia marcescens,,,,,,,,,Streptococcus anginosus,,NA,251.3148053,1.793620008
+P235,LRTI,Viral LRTI,Male,1.51129364,,,,,,Human rhinovirus sp.,Rhinovirus A,,,,,4246.704944,NA,0.143126318
+P236,LRTI,Bacterial/viral LRTI,Male,0.72279261,,,,,,Rhinovirus A,,,,Moraxella catarrhalis,,214.075491,2317.639985,0.291426994
+P237,LRTI,Bacterial/viral LRTI,Male,0.79671458,RSV,Parainfluenza 2,,,,Human orthorubulavirus 2,Human orthopneumovirus,,,Haemophilus influenzae,,1204.792493,1585.646088,0.986429285
+P238,LRTI,Bacterial/viral LRTI,Male,0.10130048,RSV,Staphylococcus aureus,Strep viridans,,,Human orthopneumovirus,Respiratory syncytial virus,,,Streptococcus pneumoniae,,1886.140037,3.376611473,0.02215192
+P239,LRTI,Bacterial/viral LRTI,Female,0.34223135,,,,,,Human metapneumovirus,,,,Moraxella catarrhalis,,213.2549585,6.600190136,0.150255642
+P240,LRTI,Bacterial/viral LRTI,Male,0.13415469,RSV,Beta hemolytic strep,,,,Human orthopneumovirus,,,,,,217.2371135,NA,0.001149145
+P241,LRTI,Bacterial/viral LRTI,Female,0.20807666,,,,,,Rhinovirus C,,,,Haemophilus influenzae,,9.391465073,18855.52526,0.034516284
+P242,LRTI,Bacterial/viral LRTI,Male,0.11772758,,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Streptococcus pneumoniae,,4119.819694,24.89199532,0.0583401
+P243,LRTI,Bacterial/viral LRTI,Male,0.08761123,RSV,Moraxella catarrhalis,Klebsiella pneumoniae,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,359.0956387,59.74969031,0.421214791
+P244,LRTI,Bacterial/viral LRTI,Female,0.26830938,RSV,,,,,Human orthopneumovirus,Human betaherpesvirus 5,,,Staphylococcus aureus,,12.13187703,16.87700635,1.606879139
+P245,LRTI,Viral LRTI,Female,0.12320329,,,,,,Human orthopneumovirus,,,,,,69.3141752,NA,2.074514489
+P246,LRTI,Viral LRTI,Female,1.31964408,,,,,,Human bocavirus,,,,,,4.685645875,NA,1.223456605
+P247,LRTI,Bacterial/viral LRTI,Female,0.55852156,,,,,,Human metapneumovirus,,,,Haemophilus influenzae,,64.08099591,196.5165227,2.011875343
+P248,LRTI,Bacterial/viral LRTI,Male,3.70978782,,,,,,Human metapneumovirus,,,,Haemophilus influenzae,,10899.16068,439.496243,0.277769912
+P249,LRTI,Viral LRTI,Male,5.97672827,,,,,,Human rhinovirus sp.,Rhinovirus A,,,,,32327.84097,NA,0.054671367
+P250,LRTI,Viral LRTI,Female,1.76317591,Parainfluenza 1,,,,,Human respirovirus 1,,,,,,1154.825755,NA,0.018533057
+P251,LRTI,Bacterial/viral LRTI,Female,1.06228611,RSV,Coronavirus,Haemophilus influenzae,Moraxella catarrhalis,,Human orthopneumovirus,,,,Haemophilus influenzae,,38.03987899,508.5510841,0.335372354
+P252,LRTI,Bacterial/viral LRTI,Male,1.42642026,HMPV,,,,,Human metapneumovirus,,,,Moraxella catarrhalis,,8.999663359,31.65030124,0.609665536
+P253,LRTI,Viral LRTI,Female,0.19986311,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,4616.422735,7.055868586,0.015812839
+P254,LRTI,Viral LRTI,Female,0.43805613,RSV,Adenovirus,,,,Human orthopneumovirus,Respiratory syncytial virus,,,,,4828.598724,NA,0.009244011
+P255,LRTI,Viral LRTI,Male,2.55989049,HMPV,Rhinovirus,,,,Human metapneumovirus,,,,,,651.8338363,NA,0.114960109
+P256,CTRL,CTRL,Female,9.5468857,,,,,,,,,,,,NA,NA,2.930017469
+P257,IPC,Bacterial IPC,Male,10.7488022,Streptococcus pneumoniae,,,,,,,,,Streptococcus pneumoniae,,NA,6217.60456,1.215272665
+P258,LRTI,Bacterial/viral LRTI,Male,0.56947296,Coronavirus,HMPV,,,,Betacoronavirus 1,Human metapneumovirus,Rhinovirus A,,Haemophilus influenzae,,80.5821839,872.6587616,0.348961827
+P259,LRTI,Bacterial/viral LRTI,Male,16.366872,RSV,,,,,Human rhinovirus sp.,Rhinovirus A,,,Streptococcus pneumoniae,,9136.081952,107.7741348,0.351824166
+P260,CTRL,CTRL,Male,11.3374401,,,,,,,,,,,,NA,NA,2.734129924
+P261,IPC,Bacterial/viral IPC,Male,1.37713895,Parainfluenza 1,Staphylococcus aureus,,,,Human respirovirus 1,,,,,,0.329462485,NA,1.005052862
+P262,LRTI,Bacterial/viral LRTI,Male,0.72553046,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Streptococcus pneumoniae,,2539.367972,2.361192394,0.015045775
+P263,LRTI,Bacterial LRTI,Male,15.9479808,Staphylococcus aureus,Citrobacter freundii,Pseudomonas aeruginosa,,,,,,,Pseudomonas aeruginosa,,NA,3596.90692,0.692463941
+P264,LRTI,Viral LRTI,Male,1.06776181,RSV,Rhinovirus,,,,Human rhinovirus sp.,Rhinovirus A,Enterovirus sp.,,,,88032.07457,NA,0.395360229
+P265,CTRL,CTRL,Female,13.9164956,,,,,,,,,,,,NA,NA,1.800429854
+P266,IPC,Bacterial IPC,Female,14.1409993,,,,,,,,,,Haemophilus influenzae,,NA,165.9475606,0.198786947
+P267,LRTI,Bacterial/viral LRTI,Male,0.14510609,Staphylococcus aureus,Rhinovirus,,,,Human rhinovirus sp.,,,,Staphylococcus aureus,,0.1832963,3616.099953,0.643593526
+P268,CTRL,CTRL,Male,15.8548939,,,,,,,,,,,,NA,NA,1.32384938
+P269,IPC,Bacterial IPC,Male,12.29295,,,,,,,,,,Haemophilus influenzae,,NA,3578.468408,0.917774204
+P270,LRTI,Bacterial/viral LRTI,Female,0.26009583,RSV,Coronavirus,Haemophilus influenzae,,,Human orthopneumovirus,Respiratory syncytial virus,,,Haemophilus influenzae,,5365.551957,8204.138888,0.700548771
+P271,LRTI,Bacterial/viral LRTI,Female,0.5229295,Moraxella catarrhalis,,,,,Human orthopneumovirus,,,,Moraxella catarrhalis,,64.70369421,501.3920075,0.399456529
+P272,IPC,Viral IPC,Male,1.71937029,,,,,,Rhinovirus C,,,,,,0.968035603,NA,1.911936234
+P273,IPC,Viral IPC,Female,4.40793977,,,,,,Rhinovirus B,Human mastadenovirus C,,,,,8.727367497,NA,3.269155923
+P274,LRTI,Viral LRTI,Female,16.3696099,Coronavirus,Parainfluenza 4,,,,Human orthorubulavirus 4,Human coronavirus NL63,,,,,113.15602,NA,2.130413555
+P275,LRTI,Bacterial/viral LRTI,Male,0.862423,RSV,Adenovirus,Haemophilus influenzae,,,,,,,Haemophilus influenzae,,NA,60750.67933,0.027428452
+P276,LRTI,Bacterial/viral LRTI,Female,0.45174538,RSV,Rhinovirus,Adenovirus,,,Human orthopneumovirus,Respiratory syncytial virus,,,Haemophilus influenzae,,627.3044623,13691.4848,0.201115119
+P277,IPC,Bacterial IPC,Female,12.6324435,Staphylococcus aureus,,,,,,,,,Staphylococcus aureus,,NA,45463.50432,2.250232095
+P278,IPC,Bacterial IPC,Female,11.2334018,,,,,,,,,,Streptococcus pneumoniae,,NA,24.81673567,2.295799889
+P279,IPC,Viral IPC,Male,0.65160849,Adenovirus,,,,,,,,,,,NA,NA,2.314077567
+P280,CTRL,CTRL,Female,16.7145791,,,,,,,,,,,,NA,NA,2.359405327
+P281,LRTI,Bacterial/viral LRTI,Female,0.14236824,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Haemophilus influenzae,,1966.320922,7686.355774,1.231422936
+P282,LRTI,Bacterial/viral LRTI,Female,0.34770705,RSV,,,,,Human orthopneumovirus,,,,Moraxella catarrhalis,,292.2840608,138.4019229,0.639760484
+P283,IPC,Bacterial/viral IPC,Male,0.35318275,Staphylococcus aureus,Group B strep,,,,Rhinovirus A,,,,,,11.14395377,NA,2.059057017
+P284,IPC,Bacterial IPC,Male,0.24093087,Moraxella catarrhalis,Staphylococcus aureus,,,,,,,,Moraxella catarrhalis,,NA,27043.39434,0.174636536
+P285,IPC,Bacterial IPC,Male,3.17590691,,,,,,,,,,Haemophilus influenzae,,NA,1.400029849,1.062937478
+P286,CTRL,CTRL,Female,10.6447639,,,,,,,,,,,,NA,NA,3.998776852
+P287,IPC,Bacterial/viral IPC,Female,4.04106776,,,,,,Influenza A virus,,,,Pseudomonas aeruginosa,,1169.566175,28871.25491,0.165600506
+P288,LRTI,Bacterial/viral LRTI,Female,0.25735797,,,,,,Rhinovirus A,,,,Moraxella catarrhalis,,2007.161502,253.8704653,0.385961192
+P289,IPC,Bacterial IPC,Male,0.24366872,,,,,,,,,,Moraxella catarrhalis,,NA,17355.06809,0.118926515
+P290,LRTI,Bacterial LRTI,Male,0.41067762,,,,,,,,,,Moraxella catarrhalis,,NA,241.9764324,0.952315968
+P291,LRTI,Bacterial/viral LRTI,Female,1.41273101,Rhinovirus,Moraxella catarrhalis,,,,Rhinovirus C,,,,Moraxella catarrhalis,,445.1084058,1228.853351,2.889480949
+P292,IPC,Viral IPC,Female,0.5119781,Parainfluenza 2,Rhinovirus,,,,Human orthorubulavirus 2,,,,,,23.7876406,NA,2.456168511
+P293,LRTI,Bacterial/viral LRTI,Female,1.49760438,,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Moraxella catarrhalis,,393.0574408,45.78947509,0.428196629
+P294,IPC,Viral IPC,Male,6.56810404,,,,,,Rhinovirus C,,,,,,305.5135624,NA,0.275007687
+P295,CTRL,CTRL,Male,1.49486653,,,,,,,,,,,,NA,NA,1.744855336
+P296,LRTI,Bacterial/viral LRTI,Male,0.09034908,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Haemophilus influenzae,,1894.949204,1.366682921,0.009608215
+P297,IPC,Viral IPC,Male,0.19164956,,,,,,Human orthopneumovirus,,,,,,54.67857537,NA,1.83063447
+P298,LRTI,Bacterial/viral LRTI,Male,0.22724162,RSV,,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,146.1320312,133.1399623,1.529704651
+P299,CTRL,CTRL,Male,12.9582478,,,,,,,,,,,,NA,NA,2.826136799
+P300,LRTI,Bacterial/viral LRTI,Male,3.35660507,RSV,Adenovirus,,,,Human orthopneumovirus,,,,Haemophilus influenzae,,4.733017157,1429.671095,0.025315035
+P301,CTRL,CTRL,Male,0.88158795,,,,,,,,,,,,NA,NA,1.761405875
+P302,LRTI,Bacterial/viral LRTI,Male,0.25735797,Haemophilus influenzae,Moraxella catarrhalis,,,,Rhinovirus A,,,,Haemophilus influenzae,,32.37368167,14853.9665,0.15535735
+P303,CTRL,CTRL,Female,14.6995209,,,,,,,,,,,,NA,NA,1.838674287
+P304,LRTI,Viral LRTI,Male,1.53593429,,,,,,Rhinovirus C,,,,,,727.1140832,NA,1.192553541
+P305,IPC,Bacterial/viral IPC,Female,1.46475017,,,,,,Human coronavirus NL63,,,,Streptococcus pneumoniae,,5.065450759,196.5255638,1.525338226
+P306,IPC,Viral IPC,Female,0.42710472,,,,,,Rhinovirus A,,,,,,42.69954868,NA,1.615364469
+P307,CTRL,CTRL,Female,0.50102669,,,,,,,,,,,,NA,NA,0.140753823
+P308,IPC,Bacterial/viral IPC,Female,1.14989733,,,,,,Rhinovirus C,,,,Streptococcus pneumoniae,,843.8569262,6.982562962,0.094936618
+P309,CTRL,CTRL,Female,10.2642026,,,,,,,,,,,,NA,NA,1.706091224
+P310,LRTI,Bacterial LRTI,Male,0.94729637,,,,,,,,,,Moraxella catarrhalis,,NA,272.2908679,1.730446671
+P311,CTRL,CTRL,Female,0.82135524,,,,,,,,,,,,NA,NA,1.373904985
+P312,CTRL,CTRL,Male,15.8056126,,,,,,,,,,,,NA,NA,1.591739755
+P313,LRTI,Bacterial/viral LRTI,Male,0.24366872,Coronavirus,Staphylococcus aureus,Strep viridans,,,Human coronavirus 229E,,,,,,46.82602445,NA,1.237906902
+P314,LRTI,Bacterial/viral LRTI,Male,0.26283368,RSV,,,,,Human orthopneumovirus,Respiratory syncytial virus,,,Haemophilus influenzae,,2.074222289,1610.937589,0.04304512
+P315,LRTI,Bacterial/viral LRTI,Male,1.68651609,,,,,,Rhinovirus A,,,,Haemophilus influenzae,,9.278642401,82.82641262,1.097926677
+P316,CTRL,CTRL,Female,15.1074606,,,,,,,,,,,,NA,NA,0.551565968
+P317,LRTI,Viral LRTI,Male,3.17316906,Adenovirus,,,,,Rhinovirus A,Human mastadenovirus C,,,,,10.75394315,NA,2.106057489
+P318,CTRL,CTRL,Male,0.68172485,,,,,,,,,,,,NA,NA,2.062603462
+P319,CTRL,CTRL,Female,14.349076,,,,,,,,,,,,NA,NA,1.733014916
+P320,CTRL,CTRL,Male,0.64065708,,,,,,,,,,,,NA,NA,1.297628147
+P321,LRTI,Bacterial LRTI,Male,4.45174538,Streptococcus pneumoniae,Klebsiella pneumoniae,Stenotrophomonas maltophilia,,,,,,,Stenotrophomonas maltophilia,Streptococcus pneumoniae,NA,849.5575815,0.986783424
+P322,LRTI,Viral LRTI,Female,1.45927447,,,,,,Primate bocaparvovirus 1,Human bocavirus,,,,,155.9980983,NA,0.932554811
+P323,IPC,Viral IPC,Female,1.09240246,,,,,,Rhinovirus A,,,,,,89.75123822,NA,2.355304532
+P324,LRTI,Bacterial/viral LRTI,Female,4.90349076,Parainfluenza 1,Parainfluenza 4,Rhinovirus,Streptococcus pneumoniae,,Rhinovirus A,,,,Moraxella catarrhalis,,3.137562111,12815.51251,0.769102294
+P325,IPC,Viral IPC,Female,17.0732375,,,,,,Human orthorubulavirus 4,,,,,,23.03087981,NA,2.825615216
+P326,CTRL,CTRL,Male,13.2128679,,,,,,,,,,,,NA,NA,3.13768803
