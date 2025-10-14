@@ -3,7 +3,7 @@ title: "IvC Humann3 Analysis"
 output: html_notebook
 ---
 
-# Load packages
+## Load packages
 
 ```{r}
 library(tidyverse)
@@ -12,189 +12,79 @@ library(patchwork)
 library(Maaslin2)
 ```
 
-# Load data
-
-Load HUMAnN result.
+## Load HUMAnN result
 
 ```{r}
 # Pathways
-df <- data.table::fread(
-  "/hpc/projects/data.science/abigail.glascock/IvC/functional_profiling/humann_pathabundance_relab.tsv",
-  sep="\t",
-  header=TRUE,
-) %>%
+df <- read.csv("/hpc/projects/data.science/abigail.glascock/IvC/functional_profiles.csv", header=TRUE) %>%
   as.data.frame()
-rownames(df) <- df[,"# Pathway"]
 
+rownames(df) <- df$Pathway
+df<-df %>% select(-Pathway)
 
 df
 ```
 
-Load metadata.
+## Load metadata
 
 ```{r}
-metadata <- read.csv("/hpc/projects/data.science/abigail.glascock/IvC/metadata_newlabels_062725.csv", header=TRUE)
+### Import metadata
+metadata <- read.csv("/hpc/projects/data.science/abigail.glascock/IvC/metadata.csv", header=TRUE)
 
-metadata
-```
+### Filter metadata
+meta<-metadata %>% 
+  filter(group=="LRTI"|group=="IPC") %>% 
+  select(Patient,group)
 
-
-```{r}
 # Relevel infection status
-metadata$NEW_label_subclass <- factor(metadata$NEW_label_subclass,levels=c("Bacterial LRTI","Viral LRTI", "Bacterial/viral LRTI", "Bacterial colonizer", "Viral colonizer", "Bacterial/viral colonizer", "Control"))
-
-meta<- metadata %>% mutate(infection_derived=case_when(
-    grepl("LRTI", NEW_label_subclass) ~ "LRTI", 
-    grepl("colonizer", NEW_label_subclass) ~ "IPC", 
-    grepl("control", NEW_label_subclass, ignore.case = TRUE) ~ "CTRL",
-    TRUE ~ "NA")) %>% 
-  filter(infection_derived!="NA") %>%
-  filter(infection_derived!="CTRL") %>% 
-  select(sample_name,infection_derived)
-
-meta$infection_derived<-factor(meta$infection_derived, levels=c("LRTI", "IPC", "CTRL"))
+meta$group<-factor(meta$group, levels=c("LRTI", "IPC"))
 
 # Set rownames
-rownames(meta) <- meta$sample_name
-meta2 <-meta %>% select(-sample_name)
+rownames(meta) <- meta$Patient
+meta2 <-meta %>% select(-Patient)
 
-metacont<-metadata %>% 
-  mutate(infection_derived=case_when(
-    grepl("LRTI", NEW_label_subclass) ~ "LRTI", 
-    grepl("colonizer", NEW_label_subclass) ~ "IPC", 
-    grepl("control", NEW_label_subclass, ignore.case = TRUE) ~ "CTRL",TRUE ~ "NA")) %>% 
-  filter(infection_derived=="LRTI"|infection_derived=="CTRL") %>% 
-  select(sample_name,infection_derived)
-
-metacont$infection_derived<-factor(metacont$infection_derived, levels=c("LRTI", "CTRL"))
-
-# Set rownames
-rownames(metacont) <- metacont$sample_name
-metacont2 <-metacont %>% select(-sample_name)
-
+meta2
 ```
 
-Process the pathway file so that it matches with the metadata file, and remove
-stratified (ie, species-level) pathways.
+### Run Maaslin
 
 ```{r}
-# Remove the suffix
-colnames(df) <- sapply(
-  colnames(df), FUN = function(x)
-    strsplit(x,"_reads_nh_Abundance",fixed=TRUE)[[1]][1]
-)
-colnames(df) <- sapply(
-  colnames(df), FUN = function(x)
-    strsplit(x,"_nova_",fixed=TRUE)[[1]][1]
-)
-colnames(df) <- sapply(
-  colnames(df), FUN = function(x)
-    strsplit(x,"_nov_", fixed=TRUE)[[1]][1]
-)
-colnames(df) <- gsub("_S[0-9]+_[0-9]+$", "", colnames(df))
-colnames(df) <- gsub("_S[0-9]+_1_[0-9]+$", "", colnames(df))
-colnames(df) <- gsub("_S[0-9]+_L[0-9]+_[0-9]+$", "", colnames(df))
-
-
-
 # Retain certain samples
 df2 <- df[,rownames(meta2)]
 
 # Remove stratified pathways
 df2 <- df2[!grepl("\\|", rownames(df2)),]
 
-df2 
-
-# Retain certain samples
-dfcont <- df[,rownames(metacont2)]
-
-# Remove stratified pathways
-dfcont <- dfcont[!grepl("\\|", rownames(dfcont)),]
-
-dfcont 
-```
-
-
-```{r}
-fit_5prev <- Maaslin2(
-  input_data = df2,
-  input_metadata = meta2,
-  output = "July2025_maaslin2_LRTIvIPC_prev5",
-  fixed_effects = c("infection_derived"),
-  normalization = "NONE",
-  transform = "LOG",
-  reference = c("infection_derived,IPC"),
-  min_abundance   = 0,
-  min_prevalence  = 0.05,
-)
-
 fit_1prev <- Maaslin2(
   input_data = df2,
   input_metadata = meta2,
-  output = "July25_maaslin2_LRTIvIPC_prev1",
-  fixed_effects = c("infection_derived"),
+  output = "102025_maaslin2_LRTIvIPC_prev1",
+  fixed_effects = c("group"),
   normalization = "NONE",
   transform = "LOG",
-  reference = c("infection_derived,IPC"),
+  reference = c("group,IPC"),
   min_abundance   = 0,
   min_prevalence  = 0.01,
 )
+
 ```
 
-# Analysis
+### Process for plotting
 
-Process the MaAsLin2 output for plotting
 
 ```{r}
 # All pathways
 pathway.res <- fit_1prev$results
 
-# Export
-write.csv(
-  pathway.res,
-  "/hpc/projects/data.science/abigail.glascock/IvC/July25_MaAsLin2_LRTIvIPC_prev1.csv",
-  row.names=FALSE
-)
-
-# Pathways with FDR < 0.25
-pathway.plot25 <- pathway.res %>%
-  subset(qval<0.25) %>%
-  subset(!(feature %in% c("UNMAPPED","UNINTEGRATED")))
-
 # Pathways with FDR < 0.05
 pathway.plot5 <- pathway.res %>%
   subset(qval<0.05) %>%
   subset(!(feature %in% c("UNMAPPED","UNINTEGRATED"))) 
-```
-
-Clean up the pathways' names
-
-```{r}
-# Replace the first ".." with ":"
-# Remove the pathway ID, by splitting at the first 
-pathway.plot25$pathway.name <- sub(
-  "..", ": ",
-  pathway.plot25$feature,
-  fixed=TRUE)
-
-# Replace dot around PWY with hyphen
-pathway.plot25$pathway.name <- gsub(
-  ".PWY", "-PWY",
-  pathway.plot25$pathway.name,
-  fixed=TRUE)
-pathway.plot25$pathway.name <- gsub(
-  "PWY.", "PWY-",
-  pathway.plot25$pathway.name,
-  fixed=TRUE)
-
-# Replace remaining dots with space
-pathway.plot25$pathway.name <- gsub(
-  "\\.+", " ",
-  pathway.plot25$pathway.name)
 
 
 # Replace the first ".." with ":"
 # Remove the pathway ID, by splitting at the first 
+
 pathway.plot5$pathway.name <- sub(
   "..", ": ",
   pathway.plot5$feature,
@@ -216,7 +106,6 @@ pathway.plot5$pathway.name <- gsub(
   pathway.plot5$pathway.name)
 
 pathway.plot5$pwy <-str_split_i(pathway.plot5$pathway.name,":",2)
-pathway.plot25$pwy <-str_split_i(pathway.plot25$pathway.name,":",2)
 
 pathway.plot52<-pathway.plot5 %>% mutate(new_name=case_when(grepl("urea", pwy) ~ "Urea cycle",
                                             grepl("tickland", pwy) ~ "L-arginine degradation XIII\n Stickland reaction",
@@ -226,41 +115,11 @@ pathway.plot52<-pathway.plot5 %>% mutate(new_name=case_when(grepl("urea", pwy) ~
                                             grepl("generic",pwy) ~ "Fatty acid beta oxidation I\n generic",
                                             grepl("plant",pwy) ~ "Fatty acid beta oxidation II\nplant peroxisome",
                                             TRUE ~ "NA"))
-pathway.plot25$new_name<-str_to_sentence(pathway.plot25$pwy)
 ```
 
-Bar plot. The `coef` column is approximately log2(fold change): https://forum.biobakery.org/t/trying-to-understand-coef-column-and-how-to-convert-it-to-fold-change/3136/9
+### Plot results
 
 ```{r}
-p <- ggplot(data=pathway.plot25,
-       aes(x=coef,
-           y=reorder(new_name,coef))) +
-  geom_col(fill="#008080FF", width=0.6, alpha=0.7) +
-  geom_vline(xintercept = 0, linewidth = 0.4, color = "black") +
-  geom_text(
-    x=0,
-    aes(label=sprintf("P[adj]== %.2g", qval)),
-    hjust=-0.09, size=3.5) +
-  scale_x_continuous(limits=c(-1,0,1), expand=c(0,0),
-                     breaks=c(-1,0,1)) +
-  coord_cartesian(clip="off") +
-  labs(x="log2(fold change)", y="",
-       title="Microbial functional pathways associated with infection status") +
-  theme_bw() + theme(
-    plot.title = element_text(hjust = 0.5, size=12, face="plain"),
-    axis.text.x = element_text(size=12, color="black"),
-    axis.text.y = element_text(size=12, color="black"),
-    text = element_text(size=12, family="Arial"),
-    plot.margin = unit(c(0.5,2.5,0.5,0), "cm"),
-    panel.grid.minor=element_blank(),
-    legend.position = "bottom"
-  )
-ggsave(
-  "/hpc/projects/data.science/abigail.glascock/IvC/IvC_maaslin_25_072925.svg",
-  plot=p,
-  width=7, height=5.5, units="in"
-)
-
 p <- ggplot(data=pathway.plot52,
        aes(x=coef,
            y=reorder(new_name,coef))) +
@@ -285,278 +144,12 @@ p <- ggplot(data=pathway.plot52,
     legend.position = "bottom"
   )
 ggsave(
-  "/hpc/projects/data.science/abigail.glascock/IvC/IvC_maaslin_5_072925.svg",
+  "/hpc/projects/data.science/abigail.glascock/IvC/IvC_maaslin_5_101325.svg",
   plot=p,
   width=5.5, height=5.5, units="in"
 )
 ```
 
-### Compare Control to LRTI
-
-```{r}
-fit_5prev <- Maaslin2(
-  input_data = dfcont,
-  input_metadata = metacont2,
-  output = "July25_maaslin2_Infectionvcontrol_prev5",
-  fixed_effects = c("infection_derived"),
-  normalization = "NONE",
-  transform = "LOG",
-  reference = c("infection_derived,Control"),
-  min_abundance   = 0,
-  min_prevalence  = 0.05,
-)
-
-fit_1prev <- Maaslin2(
-  input_data = dfcont,
-  input_metadata = metacont,
-  output = "July25_maaslin2_Infectionvcontrol_prev1",
-  fixed_effects = c("infection_derived"),
-  normalization = "NONE",
-  transform = "LOG",
-  reference = c("infection_derived,Control"),
-  min_abundance   = 0,
-  min_prevalence  = 0.01,
-)
-```
-
-```{r}
-# All pathways
-pathway.res <- fit_1prev$results
-
-# Export
-write.csv(
-  pathway.res,
-  "/hpc/projects/data.science/abigail.glascock/IvC/July25_MaAsLin2_InfectionvControl_prev1.csv",
-  row.names=FALSE
-)
-
-# Pathways with FDR < 0.25
-pathway.plot25 <- pathway.res %>%
-  subset(pval<0.25) %>%
-  subset(!(feature %in% c("UNMAPPED","UNINTEGRATED")))
-
-# Pathways with FDR < 0.05
-pathway.plot5 <- pathway.res %>%
-  subset(pval<0.05) %>%
-  subset(!(feature %in% c("UNMAPPED","UNINTEGRATED")))
-```
-
-```{r}
-# Replace the first ".." with ":"
-# Remove the pathway ID, by splitting at the first 
-pathway.plot25$pathway.name <- sub(
-  "..", ": ",
-  pathway.plot25$feature,
-  fixed=TRUE)
-
-# Replace dot around PWY with hyphen
-pathway.plot25$pathway.name <- gsub(
-  ".PWY", "-PWY",
-  pathway.plot25$pathway.name,
-  fixed=TRUE)
-pathway.plot25$pathway.name <- gsub(
-  "PWY.", "PWY-",
-  pathway.plot25$pathway.name,
-  fixed=TRUE)
-
-# Replace remaining dots with space
-pathway.plot25$pathway.name <- gsub(
-  "\\.+", " ",
-  pathway.plot25$pathway.name)
 
 
-# Replace the first ".." with ":"
-# Remove the pathway ID, by splitting at the first 
-pathway.plot5$pathway.name <- sub(
-  "..", ": ",
-  pathway.plot5$feature,
-  fixed=TRUE)
 
-# Replace dot around PWY with hyphen
-pathway.plot5$pathway.name <- gsub(
-  ".PWY", "-PWY",
-  pathway.plot5$pathway.name,
-  fixed=TRUE)
-pathway.plot5$pathway.name <- gsub(
-  "PWY.", "PWY-",
-  pathway.plot5$pathway.name,
-  fixed=TRUE)
-
-# Replace remaining dots with space
-pathway.plot5$pathway.name <- gsub(
-  "\\.+", " ",
-  pathway.plot5$pathway.name)
-```
-
-```{r}
-p <- ggplot(data=pathway.plot25,
-       aes(x=coef,
-           y=reorder(pathway.name,coef))) +
-  geom_col(fill="#D41159", width=0.6) +
-  geom_vline(xintercept = 0, linewidth = 0.4, color = "black") +
-  geom_text(
-    x=0,
-    aes(label=sprintf("Padj = %.2g", qval)),
-    hjust=-0.09, size=2.8) +
-  scale_x_continuous(limits=c(-1,0,1), expand=c(0,0),
-                     breaks=c(-1,0,1)) +
-  coord_cartesian(clip="off") +
-  labs(x="log2(fold change)", y="",
-       title="Microbial functional pathways\nassociated with infection status") +
-  theme_bw() + theme(
-    plot.title = element_text(hjust = 0.5, size=10, face="plain"),
-    axis.text.x = element_text(size=10, color="black"),
-    axis.text.y = element_text(size=9, color="black"),
-    text = element_text(size=10, family="Arial"),
-    plot.margin = unit(c(0.5,2,0.5,0), "cm"),
-    panel.grid.minor=element_blank(),
-    legend.position = "none"
-  )
-ggsave(
-  "/hpc/projects/data.science/abigail.glascock/IvC/IvC_maaslin2_microbial_pathway_InfectionvControl_prev5.25.svg",
-  plot=p,
-  width=7.5, height=5.5, units="in"
-)
-
-p <- ggplot(data=pathway.plot5,
-       aes(x=coef,
-           y=reorder(pathway.name,coef))) +
-  geom_col(fill="#D41159", width=0.6) +
-  geom_vline(xintercept = 0, linewidth = 0.4, color = "black") +
-  geom_text(
-    x=0,
-    aes(label=sprintf("Padj = %.2g", qval)),
-    hjust=-0.09, size=2.8) +
-  scale_x_continuous(limits=c(-1,0,1), expand=c(0,0),
-                     breaks=c(-1,0,1)) +
-  coord_cartesian(clip="off") +
-  labs(x="log2(fold change)", y="",
-       title="Microbial functional pathways\nassociated with infection status") +
-  theme_bw() + theme(
-    plot.title = element_text(hjust = 0.5, size=10, face="plain"),
-    axis.text.x = element_text(size=10, color="black"),
-    axis.text.y = element_text(size=9, color="black"),
-    text = element_text(size=10, family="Arial"),
-    plot.margin = unit(c(0.5,2,0.5,0), "cm"),
-    panel.grid.minor=element_blank(),
-    legend.position = "none"
-  )
-ggsave(
-  "/hpc/projects/data.science/abigail.glascock/IvC/IvC_maaslin2_microbial_pathway_InfectionvControl_prev5.5.svg",
-  plot=p,
-  width=7.5, height=5.5, units="in"
-)
-```
-
-```{r stratified analysis}
-
-### read in 
-strat<- data.table::fread(
-  "/hpc/projects/data.science/abigail.glascock/IvC/functional_profiling/humann_pathabundance_stratified.tsv",
-  sep="\t",
-  header=TRUE,
-) %>%
-  as.data.frame()
-rownames(strat) <- strat[,"# Pathway"]
-
-### sep by group
-# Pivot to long format
-humann_long <- strat %>%
-  pivot_longer(
-    cols = -1,  # first column is feature ID
-    names_to = "sample_name",
-    values_to = "abundance"
-  )
-
-# Join with metadata
-humann_merged <- humann_long %>%
-  mutate(sample_name=str_extract(sample_name, ".*(?=_S\\d+)")) %>%
-  left_join(meta, by = "sample_name") %>%
-  filter(infection_derived=="Infection" | infection_derived=="Incidental Carriage") 
-
-
-# Split into a list of data frames by group
-grouped_list <- split(humann_merged, humann_merged$infection_derived)
-
-# (Optional) Write each to a separate file
-walk(names(grouped_list), function(group_name) {
-  df <- grouped_list[[group_name]] %>%
-    pivot_wider(names_from = sample_name, values_from = abundance)
-
-  write_tsv(df, paste0("pathabundance_", group_name, ".tsv"))
-})
-
-```
-
-```{r barplots}
-
-
-```
-
-```{r summary}
-humann_merged %>%
-  group_by(`# Pathway`,`infection_derived`) %>%
-  summarise(mean_abundance = mean(abundance, na.rm = TRUE)) %>%
-  arrange(desc(mean_abundance)) %>%
-  print(n = 20)
-```
-
-```{r}
-abundance_df<-strat %>% select(-`# Pathway`)
-
-# Split rownames into pathway and taxon
-pathway_taxon_split <- strsplit(rownames(abundance_df), "\\|")
-pathways <- sapply(pathway_taxon_split, function(x) x[1])  # Extract pathway names
-taxa <- sapply(pathway_taxon_split, function(x) x[2])  # Extract taxon names
-
-# Add pathway and taxon as new columns
-abundance_df$pathway <- pathways
-abundance_df$taxon <- taxa
-
-# View the first few rows
-head(abundance_df)
-
-# Select columns starting with 'VAP' or 'OPS'
-abundance_df_selected <- abundance_df %>%
-  select(starts_with("VAP"), starts_with("OPS"))
-
-# View the selected columns
-head(abundance_df_selected)
-
-# Reshape the data from wide to long format (one row per sample, taxon, and pathway)
-long_df <- abundance_df_selected %>%
-  pivot_longer(cols = everything(), names_to = "sample_id", values_to = "abundance") %>% mutate(sample_name=str_split_i(sample_id,"_S\\d+_",1))
-
-# View the reshaped data
-head(long_df)
-
-
-# Load metadata (assuming it contains 'sample_id' and 'group' columns)
-metadata_df <- metadata %>% 
-  select(sample_name, NEW_label) %>%
-  mutate(infection_derived=case_when(NEW_label=="LRTI" ~ "Infection", NEW_label=="Colonizer" ~ "Incidental carriage", TRUE ~ "Exclude")) %>%
-  filter(infection_derived!="Exclude")
-
-# Merge with group information
-long_df <- merge(long_df, metadata_df, by = "sample_name")
-
-# View the merged data
-head(long_df)
-
-# Calculate the total abundance for each sample (row-wise sum) within each group
-group_totals <- long_df %>%
-  group_by(infection_derived, sample_name) %>%
-  summarise(total_abundance = sum(abundance))
-
-# Merge the total abundance back into the long_df
-long_df <- merge(long_df, group_totals, by = c("infection_derived", "sample_name"))
-
-# Calculate the proportion of each taxon within each pathway for each sample
-long_df <- long_df %>%
-  mutate(proportion = abundance / total_abundance)
-
-# View the data with proportions
-head(long_df)
-
-
-```
