@@ -1186,12 +1186,14 @@ results_strict<-results %>% filter(evalue<=1e-50)
 ```
 
 ```{r add summary stats}
-
 ### metadata ###
 sample_list<-read.csv("~/IvC/revised_data_63025/metadata_newlabels_062725.csv", header=TRUE)
 metadata<-sample_list %>%
   mutate(gender=X_SEX, age=X_AGE_YEARS, category_infection_class=NEW_label_subclass) %>%
   select(sample_name,gender,age,category_infection_class) 
+
+meta_patient<-metadata %>% distinct(sample_name,patient_id)
+
 
 ### add in total reads from sample overviews file 
 sample_overviews<-read.csv("~/IvC/sample_overviews_vap_0313.csv", header=TRUE)
@@ -1369,6 +1371,16 @@ data_vf_level_strict<- data_read_level_strict %>%
   ungroup() %>%
   select(VF,category, vf_total_reads, vf_total_rpm, category_total_reads, category_total_rpm, category_total_dpm) %>%
   distinct()
+
+### output raw vfs ###
+raw_vf<-data_read_level_all %>% 
+  left_join(meta_patient, by="sample_name") %>%
+  left_join(map, by="patient_id")  %>%
+  select(-sample_name.x, -sample_name.y, -patient_id) %>%
+  select(Patient, VFid, VF, category, gene_length, total_reads,     sample_total_reads, sample_total_rpm, sample_vfid_reads, sample_vfid_bases, sample_vfid_coverage,sample_vfid_rpm, sample_vfid_dpm, sample_category_reads,sample_category_rpm, category_infection_class, infection_derived)
+
+write.csv(raw_vf, "~/IvC/virulence_factors.csv")
+
 ```
 
 ```{r ANCOM of VFs}
