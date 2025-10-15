@@ -26,32 +26,30 @@ source("~/Downloads/stat_pvalue_manual.R")
 source("/users/abigail.glascock/idseq.R")
 ```
 
-```{r read in data}
+```{r read in data 1}
 ### Import background-corrected microbe data 
-microbe_reports<-read.csv("~/Downloads/full_dataset_VAP_bgc_010925.csv", header=TRUE) 
+microbe_reports<-read.csv("~/Downloads/microbial_data_bg_corrected.csv", header=TRUE) 
 
 ### Filter data 
 microbes<-microbe_reports %>% 
   filter(nt_count>=1, nr_count>=1, nt_alignment_length>=50, p_adj<0.05) %>%
   dplyr::filter(category=="viruses" | nt_count>=10) 
 
-### Read in metadata file and format
-meta<-read.csv("~/IvC/revised_data_63025/metadata_newlabels_062725.csv", header=TRUE)
-metadata<-meta %>% 
-  mutate(age=X_AGE_YEARS,gender=X_SEX, category_infection_class=NEW_label_subclass)
-metadata$age <-as.integer(metadata$age)
-
 ### Read in mapping file
-map<-read.csv("~/patient_key.csv", header=TRUE)
-map<-map %>% select(-sample_name)
+map<-read.csv("~/Downloads/patient_ID_sample_name_key.csv", header=TRUE)
+
+### Read in metadata file and join
+meta<-read.csv("~/IvC/metadata.csv", header=TRUE)
+metadata<-meta %>% 
+  mutate(age=X_AGE_YEARS,gender=X_SEX, category_infection_class=subgroup, infection_derived=group) %>% left_join(map, by="Patient")
+metadata$age <-as.integer(metadata$age)
 
 ### Join microbes to metadata
 my_data<-microbes %>% 
   dplyr::mutate(sample_name_long=sample_name) %>%
   dplyr::mutate(sample_name=case_when(grepl("OPS054",sample_name) ~ str_extract(sample_name_long, ".*?OPS054"), TRUE ~ sample_name)) %>%
   left_join(metadata, by="sample_name") %>%
-  filter(!is.na(patient_id)) %>%
-  left_join(map, by="patient_id") 
+  filter(!is.na(patient_id))
 
 microbe_matrix<-my_data %>%
   pivot_wider(names_from = name, id_cols = Patient,values_fill = 0, values_from = nt_count)
@@ -98,19 +96,14 @@ load_data <- my_data %>%
   dplyr::mutate(pseudo=summed_rpm+1) %>%
   dplyr::mutate(sumlogrpm = log10(pseudo)) %>% # calculate sumrpm and transform for each sample
   ungroup() %>%
-  mutate(infection_derived=case_when(
-    grepl("LRTI", category_infection_class) ~ "LRTI", 
-    grepl("colonizer", category_infection_class) ~ "IPC", 
-    grepl("Control", category_infection_class, ignore.case = TRUE) ~ "CTRL",
-    TRUE ~ "NA")) %>% 
   filter(infection_derived!="NA") %>%
-  filter(grepl("Bacterial|Control",category_infection_class)) %>%
+  filter(grepl("Bacterial|CTRL",category_infection_class)) %>%
   mutate(category_derived=case_when(
     grepl("Bacterial LRTI", category_infection_class) ~ "Bacterial\nLRTI", 
     grepl("Bacterial/viral LRTI", category_infection_class) ~ "Bacterial/viral\nLRTI", 
-    grepl("Bacterial colonizer", category_infection_class) ~ "Bacterial\nIPC", 
-    grepl("Bacterial/viral colonizer", category_infection_class) ~ "Bacterial/viral\nIPC", 
-    grepl("Control", category_infection_class, ignore.case = TRUE) ~ "CTRL",
+    grepl("Bacterial IPC", category_infection_class) ~ "Bacterial\nIPC", 
+    grepl("Bacterial/viral IPC", category_infection_class) ~ "Bacterial/viral\nIPC", 
+    grepl("CTRL", category_infection_class, ignore.case = TRUE) ~ "CTRL",
     TRUE ~ "NA")) %>% 
   dplyr::mutate(sumlogrpm = ifelse(is.na(sumlogrpm), 0, sumlogrpm)) %>% # set sum dpm to 0 if it's NA
   distinct(sample_name, sumlogrpm, infection_derived, category_derived, gender, age, summed_rpm, category_infection_class) 
@@ -158,7 +151,7 @@ group_positions1 <- setNames(seq_along(my_order_big), my_order_big)
 
 
 statsa <-load_data %>% 
-  filter(grepl("Control|Bacterial",category_infection_class))%>%
+  filter(grepl("CTRL|Bacterial",category_infection_class))%>%
   wilcox_test(data=.,sumlogrpm ~ category_derived) %>%
   add_significance("p") %>%
   add_xy_position(x = "Infection Status", dodge=0.4) %>% 
@@ -170,7 +163,7 @@ statsa <-load_data %>%
 
 statsa$p_char2<-paste0(label_piece,statsa$p_char)
 
-trimmed<-load_data %>% filter(grepl("Control|Bacterial",category_infection_class))
+trimmed<-load_data %>% filter(grepl("CTRL|Bacterial",category_infection_class))
 my_label<-paste0("Log-transformed bacterial ",expression(sum)," NT RPM")
 
 myplot1a<-ggplot(trimmed, aes(x=factor(category_derived, my_order_big), y=sumlogrpm, color=category_derived)) +
@@ -231,19 +224,14 @@ load_data <- my_data %>%
   dplyr::mutate(sumlogrpm = log10(pseudo)) %>% # calculate sumrpm and transform for each sample
   ungroup() %>%
   left_join(metadata %>% dplyr::select(sample_name, category_infection_class, gender, age)) %>%
-  mutate(infection_derived=case_when(
-    grepl("LRTI", category_infection_class) ~ "LRTI", 
-    grepl("colonizer", category_infection_class) ~ "IPC", 
-    grepl("Control", category_infection_class, ignore.case = TRUE) ~ "CTRL",
-    TRUE ~ "NA")) %>% 
   filter(infection_derived!="NA") %>%
-  filter(grepl("Viral|Control|viral",category_infection_class)) %>%
+  filter(grepl("Viral|CTRL|viral",category_infection_class)) %>%
   mutate(category_derived=case_when(
     grepl("Viral LRTI", category_infection_class) ~ "Viral\nLRTI", 
     grepl("Bacterial/viral LRTI", category_infection_class) ~ "Bacterial/viral\nLRTI", 
-    grepl("Viral colonizer", category_infection_class) ~ "Viral\nIPC", 
-    grepl("Bacterial/viral colonizer", category_infection_class) ~ "Bacterial/viral\nIPC", 
-    grepl("Control", category_infection_class, ignore.case = TRUE) ~ "CTRL",
+    grepl("Viral IPC", category_infection_class) ~ "Viral\nIPC", 
+    grepl("Bacterial/viral IPC", category_infection_class) ~ "Bacterial/viral\nIPC", 
+    grepl("CTRL", category_infection_class, ignore.case = TRUE) ~ "CTRL",
     TRUE ~ "NA")) %>% 
   dplyr::mutate(sumlogrpm = ifelse(is.na(sumlogrpm), 0, sumlogrpm)) %>% # set sum dpm to 0 if it's NA
   distinct(sample_name, sumlogrpm, infection_derived, gender, age, summed_rpm, category_infection_class, category_derived) 
@@ -285,7 +273,7 @@ myplot1
 my_order_big=c("Bacterial/viral\nLRTI", "Viral\nLRTI", "Bacterial/viral\nIPC", "Viral\nIPC", "CTRL")
 group_positions1 <- setNames(seq_along(my_order_big), my_order_big)
 
-trimmed<-load_data %>% filter(grepl("Viral|Control|viral", category_infection_class))
+trimmed<-load_data %>% filter(grepl("Viral|CTRL|viral", category_infection_class))
 statsa <-trimmed %>% 
   wilcox_test(data=.,sumlogrpm ~ category_derived) %>%
   add_significance("p") %>%
@@ -351,11 +339,6 @@ load_data <- my_data %>%
   dplyr::mutate(num_sp = n(), log_sp=log(num_sp), sqrt_sp=sqrt(num_sp)) %>% 
   ungroup() %>%
   left_join(metadata %>% dplyr::select(sample_name, category_infection_class, gender, age)) %>%
-  mutate(infection_derived=case_when(
-    grepl("LRTI", category_infection_class) ~ "LRTI", 
-    grepl("colonizer", category_infection_class) ~ "IPC", 
-    grepl("Control", category_infection_class, ignore.case = TRUE) ~ "CTRL",
-    TRUE ~ "NA")) %>% 
   filter(infection_derived!="NA") %>%
   distinct(sample_name, num_sp, infection_derived, gender, age, category_infection_class, log_sp, sqrt_sp) 
 
@@ -455,9 +438,9 @@ add<-c("shannon_index","simpson_index","inverse_simpson")
 names<-c(subset,add)
 data5<-data4 %>% set_names(names)
 data6<-data5 %>% filter(!is.na(shannon_index), !is.na(simpson_index), !is.na(inverse_simpson)) %>%
-  mutate(infection_derived=case_when(grepl("LRTI", category_infection_class) ~ "Infection", grepl("colonizer", category_infection_class) ~ "Incidental carriage", grepl("Control", category_infection_class) ~ "Control", TRUE ~ "NA")) %>% filter(infection_derived!="NA")
+  filter(infection_derived!="NA")
 
-my_order=c("Infection", "Incidental carriage", "Control")
+my_order=c("LRTI", "IPC", "CTRL")
 group_positions <- setNames(seq_along(my_order), my_order)
 
 ### Statistical Testing
@@ -477,7 +460,7 @@ label_piece<-"P[adj]=="
 stat.test_byinfection_shannon$p_char2<-paste0(label_piece,stat.test_byinfection_shannon$p_char)
 
 data7 <-data6 %>%
-  mutate(infection_derived=case_when(grepl("Infection", infection_derived) ~ "LRTI", grepl("Inciden", infection_derived) ~ "IPC", grepl("Contr", infection_derived) ~ "CTRL", TRUE ~ "NA"))
+  mutate(infection_derived=case_when(grepl("LRTI", infection_derived) ~ "LRTI", grepl("IPC", infection_derived) ~ "IPC", grepl("CTRL", infection_derived) ~ "CTRL", TRUE ~ "NA"))
 
 panela <- ggplot(data7, aes(x = factor(infection_derived, my_order),
                             y = shannon_index,
@@ -538,7 +521,6 @@ my_dataall<-my_data %>%
 
 combined_data<-my_dataall%>% 
   #filter(!is_water==TRUE) %>%
-  mutate(infection_derived=case_when(grepl("LRTI", category_infection_class) ~ "LRTI", grepl("colonizer", category_infection_class) ~ "IPC", grepl("Control", category_infection_class) ~ "CTRL",  TRUE ~ "NA")) %>% 
   filter(infection_derived!="NA")
 
 pruned_data<- combined_data %>%
@@ -596,9 +578,9 @@ invisible(capture.output(dev.off()))
 
 ```{r pathogen analysis panel E all}
 ### read in data
-rbm<-read.csv("~/IvC/revised_data_63025/VAP_rbm_06122025.csv", header=TRUE)
-viral<-read.csv("~/IvC/revised_data_63025/all_virus_calls_062625.csv", header=TRUE)
-knownresp<-read.csv("~/IvC/revised_data_63025/known_respiratory_pathogens_updated.csv", header=TRUE)
+rbm<-read.csv("~/Downloads/RBM_results.csv", header=TRUE)
+viral<-read.csv("~/Downloads/Viral_pathogens.csv", header=TRUE)
+knownresp<-read.csv("~/known_pathogens.csv", header=TRUE)
 
 ### limit RBM data to pathogens (n=499)
 rbm_paths<-rbm %>% 
@@ -622,7 +604,6 @@ rbm_with_infection<-left_join(rbm_withcat, metadata, by="sample_name")
 rbm_trimmed<-rbm_with_infection %>% 
   filter(category=="bacteria") %>%
   filter(!is.na(category_infection_class)) %>%
-  mutate(infection_derived=case_when(grepl("LRTI", category_infection_class) ~ "LRTI", grepl("colonizer", category_infection_class) ~ "IPC", grepl("Control", category_infection_class) ~ "CTRL", TRUE ~ "NA")) %>% 
   filter(infection_derived!="NA") 
 
 viral_formatted <- viral %>%
@@ -639,11 +620,7 @@ viral_with_infection<-left_join(viral_cat, metadata, by="sample_name")
 ### Trim & convert to infection derived (n=194)
 viral_trimmed<-viral_with_infection %>% 
   filter(!is.na(category_infection_class)) %>%
-  mutate(infection_derived=case_when(grepl("LRTI", category_infection_class) ~ "LRTI", grepl("colonizer", category_infection_class) ~ "IPC", grepl("Control", category_infection_class) ~ "CTRL", TRUE ~ "NA")) %>% 
   filter(infection_derived!="NA") 
-
-### read in full dataset file
-called_paths<-read.csv("~/IvC/full_dataset_postqc_annotated pathogens and infection classes.csv", header=TRUE)
 
 bv<-bind_rows(rbm_trimmed,viral_trimmed)
 
@@ -682,7 +659,7 @@ pathogen_load_viral<-viral_trimmed  %>%
 
 
 ### get nonhost info ###
-sample_overviews <-read.csv("~/IvC/sample_overviews_ivc_062425.csv", header=TRUE)
+sample_overviews <-read.csv("~/CZID_data_summary.csv", header=TRUE)
 so<-sample_overviews %>%
   mutate(sample_name_so = sample_name) %>%
   select(sample_name_so,reads_after_hisat2_host_filtered) %>%
@@ -695,11 +672,11 @@ input_data<-pathogen_load %>%
   mutate(category_derived=case_when(
     grepl("Viral LRTI", category_infection_class) ~ "Viral\nLRTI", 
     grepl("Bacterial/viral LRTI", category_infection_class) ~ "Bacterial/viral\nLRTI", 
-    grepl("Viral colonizer", category_infection_class) ~ "Viral\nIPC", 
-    grepl("Bacterial/viral colonizer", category_infection_class) ~ "Bacterial/viral\nIPC", 
-    grepl("Bacterial colonizer", category_infection_class) ~ "Bacterial\nIPC", 
+    grepl("Viral IPC", category_infection_class) ~ "Viral\nIPC", 
+    grepl("Bacterial/viral IPC", category_infection_class) ~ "Bacterial/viral\nIPC", 
+    grepl("Bacterial IPC", category_infection_class) ~ "Bacterial\nIPC", 
     grepl("Bacterial LRTI", category_infection_class) ~ "Bacterial\nLRTI", 
-    grepl("Control", category_infection_class, ignore.case = TRUE) ~ "CTRL",
+    grepl("CTRL", category_infection_class, ignore.case = TRUE) ~ "CTRL",
     TRUE ~ "NA"))
 
 my_order<-c("LRTI", "IPC", "CTRL")
@@ -1039,15 +1016,12 @@ my_data_bacterial<-microbes %>%
   left_join(metadata, by="sample_name") 
 
 ### Create and format metadata
-metadata <-metadata %>% select(sample_name, category_infection_class, gender, age) %>%
-  mutate(infection_derived=case_when(
-    grepl("LRTI", category_infection_class) ~ "LRTI", 
-    grepl("colonizer", category_infection_class) ~ "IPC", 
-    grepl("control", category_infection_class, ignore.case = TRUE) ~ "CTRL",
-    TRUE ~ "NA"))
-rownames(metadata) <- metadata[,1]
+metadata2 <-metadata %>% 
+  select(sample_name, category_infection_class, gender, age, group) %>%
+  mutate(infection_derived=group)
+rownames(metadata2) <- metadata2[,1]
 
-metadata2 <- metadata %>%
+metadata3 <- metadata2 %>%
   mutate(infection_derived = factor(infection_derived, c( "CTRL", "IPC", "NA","LRTI")))
 
 ### create counts file
@@ -1071,7 +1045,7 @@ library(ComplexHeatmap)
 library(colorRamp2)
 
 ### Trim data
-meta1<-metadata2 %>% filter(infection_derived=="LRTI" | infection_derived=="IPC")
+meta1<-metadata3 %>% filter(infection_derived=="LRTI" | infection_derived=="IPC")
 counts1<-counts_rsv %>% filter(sample_name %in% meta1$sample_name) 
 counts2<- t(counts1[,-1])
 colnames(counts2)<-counts1$sample_name
@@ -1173,8 +1147,8 @@ write.csv(resv, "SuppData1.csv")
 ### Virulence Factor Analysis
 
 ```{r read in data}
-blast<-read.table("~/IvC/VFDB/combined_blastn_results.tsv", sep="\t",header=TRUE)
-info<-read.table("~/IvC/VFDB/VF_info_file", sep="\t",header=TRUE)
+blast<-read.csv("~/VFDB_blast_results.csv",header=TRUE)
+info<-read.table("~/IvC/VFDB/VF_info_file.tsv", sep="\t",header=TRUE)
 
 blast2 <-blast %>% mutate(VFid=str_extract(subject_id,"VFG\\d+"))
 
@@ -1182,53 +1156,33 @@ results<-left_join(blast2,info, by="VFid")
 
 results_filtered<-results %>% filter(evalue<=1e-10)
 
-results_strict<-results %>% filter(evalue<=1e-50)
 ```
 
 ```{r add summary stats}
 ### metadata ###
-sample_list<-read.csv("~/IvC/revised_data_63025/metadata_newlabels_062725.csv", header=TRUE)
-metadata<-sample_list %>%
-  mutate(gender=X_SEX, age=X_AGE_YEARS, category_infection_class=NEW_label_subclass) %>%
-  select(sample_name,gender,age,category_infection_class) 
+metadata2<-metadata %>%
+  select(sample_name,gender,age,category_infection_class, group, Patient) 
 
-meta_patient<-metadata %>% distinct(sample_name,patient_id)
-
-
-### add in total reads from sample overviews file 
-sample_overviews<-read.csv("~/IvC/sample_overviews_vap_0313.csv", header=TRUE)
-so <-sample_overviews %>% 
-  mutate(sample_name=case_when(grepl("OPS_00\\d|OPS016_|VAP_RNA_TA_|VAP\\d_|VAP2019",sample_name) ~ str_extract(sample_name,".*?(?=_S\\d+)"), grepl("VAP-2020", sample_name) ~ str_extract(sample_name,".*?(?=_nov)"), TRUE ~ sample_name))
+### add in total ribosome-depleted reads from sample overviews file 
+sample_overviews<-read.csv("~/CZID_data_summary.csv", header=TRUE) 
 
 ### only keep 343, add infection derived ###
 my_data<-results_filtered %>%
   mutate(sample_name=case_when(grepl("OPS_00\\d|OPS016_|VAP_RNA_TA_|VAP\\d_|VAP2019",sample) ~ str_extract(sample,".*?(?=_S\\d+)"), grepl("VAP-2020", sample) ~ str_extract(sample,".*?(?=_nov)"), TRUE ~ sample)) %>%
   left_join(metadata,by="sample_name") %>%
   filter(!is.na(category_infection_class)) %>%
-  mutate(infection_derived=case_when(grepl("LRTI", category_infection_class) ~ "Infection", grepl("colonizer", category_infection_class) ~ "Incidental Carriage", grepl("Control", category_infection_class) ~ "Control", TRUE ~ "NA")) %>%
-  left_join(so, by="sample_name")
+  left_join(sample_overviews, by="sample_name")
 ### 254 samples ###
-
-### strict 
-my_data_strict<-results_strict %>%
-  mutate(sample_name=case_when(grepl("OPS_00\\d|OPS016_|VAP_RNA_TA_|VAP\\d_|VAP2019",sample) ~ str_extract(sample,".*?(?=_S\\d+)"), grepl("VAP-2020", sample) ~ str_extract(sample,".*?(?=_nov)"), TRUE ~ sample)) %>%
-  left_join(metadata,by="sample_name") %>%
-  filter(!is.na(category_infection_class)) %>%
-  mutate(infection_derived=case_when(grepl("LRTI", category_infection_class) ~ "Infection", grepl("colonizer", category_infection_class) ~ "Incidental Carriage", grepl("Control", category_infection_class) ~ "Control", TRUE ~ "NA")) %>%
-  left_join(so, by="sample_name")
-
-### 180 samples ###
 
 ```
 
 ```{r create read, rpm, dpm}
-
 ### Remember to remove control and exclude from analyses downstream
 data_read_level_all<-my_data%>%
   mutate(gene_length=length.y, hit_length=length.x) %>%
   group_by(sample) %>%
   mutate(sample_total_reads=n(),
-         million_reads=total_reads/1000000,
+         million_reads=total_reads_depleted/1000000,
          sample_total_rpm=sample_total_reads/million_reads) %>%
   ungroup() %>%
   group_by(sample,VFid) %>%
@@ -1242,15 +1196,15 @@ data_read_level_all<-my_data%>%
   mutate(sample_category_reads=n(),
          sample_category_rpm=sample_category_reads/million_reads) %>%
   ungroup() %>%
-  select(sample_name, VFid, VF, category, gene_length, total_reads, million_reads, sample_total_reads, sample_total_rpm, sample_vfid_reads, sample_vfid_bases, sample_vfid_coverage, sample_vfid_rpm, sample_vfid_dpm, sample_category_reads, sample_category_rpm, category_infection_class, infection_derived) %>%
+  select(sample_name, VFid, VF, category, gene_length, total_reads, total_reads_depleted,million_reads, sample_total_reads, sample_total_rpm, sample_vfid_reads, sample_vfid_bases, sample_vfid_coverage, sample_vfid_rpm, sample_vfid_dpm, sample_category_reads, sample_category_rpm, category_infection_class, infection_derived) %>%
   distinct()
 
-data_read_level<-my_data%>%
+data_read_level<-my_data %>%
   mutate(gene_length=length.y, hit_length=length.x) %>%
-  filter(grepl("Infection|Incidental Carriage", infection_derived)) %>%
+  filter(grepl("LRTI|IPC", infection_derived)) %>%
   group_by(sample) %>%
   mutate(sample_total_reads=n(),
-         million_reads=total_reads/1000000,
+         million_reads=total_reads_depleted/1000000,
          sample_total_rpm=sample_total_reads/million_reads) %>%
   ungroup() %>%
   group_by(sample,VFid) %>%
@@ -1264,7 +1218,7 @@ data_read_level<-my_data%>%
   mutate(sample_category_reads=n(),
          sample_category_rpm=sample_category_reads/million_reads) %>%
   ungroup() %>%
-  select(sample_name, VFid, VF, category, gene_length, total_reads, million_reads, sample_total_reads, sample_total_rpm, sample_vfid_reads, sample_vfid_bases, sample_vfid_coverage, sample_vfid_rpm, sample_vfid_dpm, sample_category_reads, sample_category_rpm, category_infection_class, infection_derived) %>%
+  select(sample_name, VFid, VF, category, gene_length, total_reads, total_reads_depleted, million_reads, sample_total_reads, sample_total_rpm, sample_vfid_reads, sample_vfid_bases, sample_vfid_coverage, sample_vfid_rpm, sample_vfid_dpm, sample_category_reads, sample_category_rpm, category_infection_class, infection_derived) %>%
   distinct()
 
 data_vf_level_all<- data_read_level %>%
@@ -1282,7 +1236,7 @@ data_vf_level_all<- data_read_level %>%
   distinct()
 
 data_vf_level<- data_read_level %>%
-  filter(grepl("Infection|Incidental Carriage", infection_derived)) %>%
+  filter(grepl("LRTI|IPC", infection_derived)) %>%
   group_by(VF) %>%
   mutate(vf_total_reads=sum(sample_vfid_reads),
          vf_total_rpm=sum(sample_vfid_rpm),
@@ -1295,92 +1249,6 @@ data_vf_level<- data_read_level %>%
   ungroup() %>%
   select(VF,category, vf_total_reads, vf_total_rpm, category_total_reads, category_total_rpm, category_total_dpm) %>%
   distinct()
-```
-
-```{r create read, rpm, dpm strict}
-
-### Remember to remove control and exclude from analyses downstream
-data_read_level_all_strict<-my_data_strict %>%
-  mutate(gene_length=length.y, hit_length=length.x) %>%
-  group_by(sample) %>%
-  mutate(sample_total_reads=n(),
-         million_reads=total_reads/1000000,
-         sample_total_rpm=sample_total_reads/million_reads) %>%
-  ungroup() %>%
-  group_by(sample,VFid) %>%
-  mutate(sample_vfid_reads=n(),
-         sample_vfid_bases=sum(hit_length),
-         sample_vfid_coverage=sample_vfid_bases/gene_length,
-         sample_vfid_dpm=sample_vfid_coverage/million_reads,
-         sample_vfid_rpm=sample_vfid_reads/million_reads) %>%
-  ungroup() %>%
-  group_by(sample,category) %>%
-  mutate(sample_category_reads=n(),
-         sample_category_rpm=sample_category_reads/million_reads) %>%
-  ungroup() %>%
-  select(sample_name, VFid, VF, category, gene_length, total_reads, million_reads, sample_total_reads, sample_total_rpm, sample_vfid_reads, sample_vfid_bases, sample_vfid_coverage, sample_vfid_rpm, sample_vfid_dpm, sample_category_reads, sample_category_rpm, category_infection_class, infection_derived) %>%
-  distinct()
-
-data_read_level_strict<-my_data_strict %>%
-  mutate(gene_length=length.y, hit_length=length.x) %>%
-  filter(grepl("Infection|Incidental Carriage", infection_derived)) %>%
-  group_by(sample) %>%
-  mutate(sample_total_reads=n(),
-         million_reads=total_reads/1000000,
-         sample_total_rpm=sample_total_reads/million_reads) %>%
-  ungroup() %>%
-  group_by(sample,VFid) %>%
-  mutate(sample_vfid_reads=n(),
-         sample_vfid_bases=sum(hit_length),
-         sample_vfid_coverage=sample_vfid_bases/gene_length,
-         sample_vfid_dpm=sample_vfid_coverage/million_reads,
-         sample_vfid_rpm=sample_vfid_reads/million_reads) %>%
-  ungroup() %>%
-  group_by(sample,category) %>%
-  mutate(sample_category_reads=n(),
-         sample_category_rpm=sample_category_reads/million_reads) %>%
-  ungroup() %>%
-  select(sample_name, VFid, VF, category, gene_length, total_reads, million_reads, sample_total_reads, sample_total_rpm, sample_vfid_reads, sample_vfid_bases, sample_vfid_coverage, sample_vfid_rpm, sample_vfid_dpm, sample_category_reads, sample_category_rpm, category_infection_class, infection_derived) %>%
-  distinct()
-
-data_vf_level_all_strict<- data_read_level_strict %>%
-  group_by(VF) %>%
-  mutate(vf_total_reads=sum(sample_vfid_reads),
-         vf_total_rpm=sum(sample_vfid_rpm),
-         vf_total_dpm=sum(sample_vfid_dpm)) %>%
-  ungroup() %>%
-  group_by(category) %>%
-  mutate(category_total_reads=sum(sample_category_reads),
-         category_total_rpm=sum(sample_category_rpm),
-         category_total_dpm=sum(sample_vfid_dpm)) %>%
-  ungroup() %>%
-  select(VF,category, vf_total_reads, vf_total_rpm, category_total_reads, category_total_rpm, category_total_dpm) %>%
-  distinct()
-
-data_vf_level_strict<- data_read_level_strict %>%
-  filter(grepl("Infection|Incidental Carriage", infection_derived)) %>%
-  group_by(VF) %>%
-  mutate(vf_total_reads=sum(sample_vfid_reads),
-         vf_total_rpm=sum(sample_vfid_rpm),
-         vf_total_dpm=sum(sample_vfid_dpm)) %>%
-  ungroup() %>%
-  group_by(category) %>%
-  mutate(category_total_reads=sum(sample_category_reads),
-         category_total_rpm=sum(sample_category_rpm),
-         category_total_dpm=sum(sample_vfid_dpm)) %>%
-  ungroup() %>%
-  select(VF,category, vf_total_reads, vf_total_rpm, category_total_reads, category_total_rpm, category_total_dpm) %>%
-  distinct()
-
-### output raw vfs ###
-raw_vf<-data_read_level_all %>% 
-  left_join(meta_patient, by="sample_name") %>%
-  left_join(map, by="patient_id")  %>%
-  select(-sample_name.x, -sample_name.y, -patient_id) %>%
-  select(Patient, VFid, VF, category, gene_length, total_reads,     sample_total_reads, sample_total_rpm, sample_vfid_reads, sample_vfid_bases, sample_vfid_coverage,sample_vfid_rpm, sample_vfid_dpm, sample_category_reads,sample_category_rpm, category_infection_class, infection_derived)
-
-write.csv(raw_vf, "~/IvC/virulence_factors.csv")
-
 ```
 
 ```{r ANCOM of VFs}
@@ -1388,33 +1256,49 @@ library(ANCOMBC)
 library(ComplexHeatmap)
 library(circlize)
 
+### ID top 50 VFs
+top50<-data_read_level %>% 
+  select(VFid, VF, sample_vfid_dpm) %>%
+  distinct() %>%
+  group_by(VF) %>%
+  summarise(total_DPM = sum(sample_vfid_dpm), na.rm = TRUE) %>%
+  arrange(desc(total_DPM)) %>%
+  slice_head(n = 50)
+
+# Build data #
+collapsed<-data_read_level %>%
+  select(sample_name, VF, VFid, sample_vfid_reads, sample_vfid_rpm, sample_vfid_dpm, infection_derived) %>%
+  group_by(sample_name,VF) %>%
+  mutate(sample_vf_reads=sum(sample_vfid_reads), 
+         sample_vf_rpm=sum(sample_vfid_rpm), 
+         sample_vf_dpm=sum(sample_vfid_dpm)) %>%
+  ungroup() %>%
+  select(sample_name, VF, sample_vf_reads, sample_vf_rpm, sample_vf_dpm, infection_derived) %>%
+  distinct() %>%
+  filter(VF %in% top50$VF)
+
 metadata$age <-as.integer(metadata$age)
 
 ### Create and format metadata
-metadata2 <-metadata %>% select(sample_name, category_infection_class, gender, age) %>%
-  mutate(infection_derived=case_when(
-    grepl("LRTI", category_infection_class) ~ "Infection", 
-    grepl("colonizer", category_infection_class) ~ "Incidental Carriage", 
-    grepl("control", category_infection_class, ignore.case = TRUE) ~ "Control",
-    TRUE ~ "NA"))
+metadata2 <-metadata %>% select(sample_name, category_infection_class, gender, age, infection_derived) 
 rownames(metadata2) <- metadata2[,1]
-
 metadata3 <- metadata2 %>%
-  mutate(infection_derived = factor(infection_derived, c( "Control", "Incidental Carriage", "NA","Infection")))
+  mutate(infection_derived = factor(infection_derived, c( "CTRL", "IPC", "LRTI")))
 
 ### create counts file
 counts<-collapsed %>% pivot_wider(names_from = VF, id_cols = sample_name, values_from = sample_vf_reads, values_fill=0)
 taxa<-collapsed %>% select(VF) %>% distinct()
 
 ### Trim data
-meta1<-metadata3 %>% filter(infection_derived=="Infection" | infection_derived=="Incidental Carriage")
+meta1<-metadata3 %>% filter(infection_derived=="LRTI" | infection_derived=="IPC")
 counts1<-counts %>% filter(sample_name %in% meta1$sample_name) 
 counts2<- t(counts1[,-1])
 colnames(counts2)<-counts1$sample_name
 
-### Format
+### Matrix  Format
 counts_ancom<-as.matrix(counts2)
 
+### Run ANCOM
 set.seed(123)
 out <- ancombc2(
   fix_formula = "infection_derived + gender + age",
@@ -1439,10 +1323,10 @@ resv<-out$res
 # Create a volcano-ready data frame
 volcano_df <- data.frame(
   taxa = resv$taxon,
-  logFC = resv$lfc_infection_derivedInfection,                  # log fold change
-  pval = resv$p_infection_derivedInfection,                 # unadjusted p-value
-  padj = resv$q_infection_derivedInfection,                # FDR-adjusted p-value
-  detected = resv$diff_infection_derivedInfection        # TRUE/FALSE if significantly different
+  logFC = resv$lfc_infection_derivedLRTI,                  # log fold change
+  pval = resv$p_infection_derivedLRTI,                 # unadjusted p-value
+  padj = resv$q_infection_derivedLRTI,                # FDR-adjusted p-value
+  detected = resv$diff_infection_derivedLRTI        # TRUE/FALSE if significantly different
 )
 
 volcano_df <- volcano_df %>%
@@ -1454,7 +1338,7 @@ volcano_df <- volcano_df %>%
     )) %>%
   mutate(taxa=case_when(grepl("HMW1/HMW2", taxa) ~ "H. influenzae | HMW1/HW2", TRUE ~ taxa))
   
-
+### plot 
 library(ggplot2)
 library(ggrepel)
 
@@ -1491,6 +1375,29 @@ write.csv(resv,"SuppData2.csv")
 ### Haemophlius VF Analysis
 
 ```{r hmw hxu}
+metadata$age <-as.integer(metadata$age)
+
+### Create and format metadata
+metadata2 <-metadata %>% select(sample_name, category_infection_class, gender, age, infection_derived) 
+rownames(metadata2) <- metadata2[,1]
+
+metadata3 <- metadata2 %>%
+  mutate(infection_derived = factor(infection_derived, c("CTRL","IPC","LRTI")))
+
+### create counts file
+counts<-collapsed %>% 
+  filter(grepl("H. influenzae", VF)) %>%
+  pivot_wider(names_from = VF, id_cols = sample_name, values_from = sample_vf_reads, values_fill=0)
+
+### Trim data
+meta1<-metadata3 %>% filter(infection_derived=="LRTI" | infection_derived=="IPC")
+counts1<-counts %>% filter(sample_name %in% meta1$sample_name) 
+counts2<- t(counts1[,-1])
+colnames(counts2)<-counts1$sample_name
+
+### Format
+counts_ancom<-as.matrix(counts2)
+
 path_data_hi2 <-data_read_level %>%
   filter(grepl("H. influenzae",VF)) %>%
   group_by(sample_name) %>%
@@ -1503,11 +1410,10 @@ path_data_hi2 <-data_read_level %>%
 hmw<-path_data_hi2 %>%
   filter(grepl("HMW1", VF)) %>%
   select(sample_name, VF, hi_VF_sumdpm, infection_derived) %>%
-  distinct() %>%
-  mutate(infection_derived=case_when(grepl("Infection",infection_derived) ~ "LRTI", grepl("Incidental", infection_derived) ~ "IPC", TRUE ~ "NA"))
+  distinct()
 
 label_piece="p=="
-my_order=c("LRTI", "IPC")
+my_order=c("LRTI","IPC")
 
 stats <-hmw %>% 
   wilcox_test(data=.,hi_VF_sumdpm ~ infection_derived) %>%
@@ -1537,15 +1443,14 @@ ggplot(hmw, aes(y = hi_VF_sumdpm, x=factor(infection_derived, my_order), color =
 
 hi_plot
 
-png(filename="IvC/Figures/101325/Fig_2H_HMW.png", 2.5,5,"in",res=300)
+png(filename="~/IvC/Figures/101325/Fig_2H_HMW.png", 2.5,5,"in",res=300)
 hi_plot
 dev.off()
 
 hxu<-path_data_hi2 %>%
   filter(grepl("HxuABC", VF)) %>%
   select(sample_name, VF, hi_VF_sumdpm, infection_derived) %>%
-  distinct() %>%
-  mutate(infection_derived=case_when(grepl("Infection",infection_derived) ~ "LRTI", grepl("Incidental", infection_derived) ~ "IPC", TRUE ~ "NA"))
+  distinct()
 
 label_piece="p=="
 
@@ -1578,7 +1483,7 @@ ggplot(hxu, aes(y = hi_VF_sumdpm, x=factor(infection_derived, my_order), color =
 
 hi_plot
 
-png(filename="IvC/Figures/101325/Fig_2H_HXU.png", 2.5,5,"in",res=300)
+png(filename="~/IvC/Figures/101325/Fig_2H_HXU.png", 2.5,5,"in",res=300)
 hi_plot
 dev.off()
 
