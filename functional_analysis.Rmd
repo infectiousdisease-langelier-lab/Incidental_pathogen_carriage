@@ -1,0 +1,155 @@
+---
+title: "IvC Humann3 Analysis"
+output: html_notebook
+---
+
+## Load packages
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(patchwork)
+library(Maaslin2)
+```
+
+## Load HUMAnN result
+
+```{r}
+# Pathways
+df <- read.csv("/hpc/projects/data.science/abigail.glascock/IvC/functional_profiles.csv", header=TRUE) %>%
+  as.data.frame()
+
+rownames(df) <- df$Pathway
+df<-df %>% select(-Pathway)
+
+df
+```
+
+## Load metadata
+
+```{r}
+### Import metadata
+metadata <- read.csv("/hpc/projects/data.science/abigail.glascock/IvC/metadata.csv", header=TRUE)
+
+### Filter metadata
+meta<-metadata %>% 
+  filter(group=="LRTI"|group=="IPC") %>% 
+  select(Patient,group)
+
+# Relevel infection status
+meta$group<-factor(meta$group, levels=c("LRTI", "IPC"))
+
+# Set rownames
+rownames(meta) <- meta$Patient
+meta2 <-meta %>% select(-Patient)
+
+meta2
+```
+
+### Run Maaslin
+
+```{r}
+# Retain certain samples
+df2 <- df[,rownames(meta2)]
+
+# Remove stratified pathways
+df2 <- df2[!grepl("\\|", rownames(df2)),]
+
+fit_1prev <- Maaslin2(
+  input_data = df2,
+  input_metadata = meta2,
+  output = "102025_maaslin2_LRTIvIPC_prev1",
+  fixed_effects = c("group"),
+  normalization = "NONE",
+  transform = "LOG",
+  reference = c("group,IPC"),
+  min_abundance   = 0,
+  min_prevalence  = 0.01,
+)
+
+```
+
+### Process for plotting
+
+
+```{r}
+# All pathways
+pathway.res <- fit_1prev$results
+
+# Pathways with FDR < 0.05
+pathway.plot5 <- pathway.res %>%
+  subset(qval<0.05) %>%
+  subset(!(feature %in% c("UNMAPPED","UNINTEGRATED"))) 
+
+
+# Replace the first ".." with ":"
+# Remove the pathway ID, by splitting at the first 
+
+pathway.plot5$pathway.name <- sub(
+  "..", ": ",
+  pathway.plot5$feature,
+  fixed=TRUE)
+
+# Replace dot around PWY with hyphen
+pathway.plot5$pathway.name <- gsub(
+  ".PWY", "-PWY",
+  pathway.plot5$pathway.name,
+  fixed=TRUE)
+pathway.plot5$pathway.name <- gsub(
+  "PWY.", "PWY-",
+  pathway.plot5$pathway.name,
+  fixed=TRUE)
+
+# Replace remaining dots with space
+pathway.plot5$pathway.name <- gsub(
+  "\\.+", " ",
+  pathway.plot5$pathway.name)
+
+pathway.plot5$pwy <-str_split_i(pathway.plot5$pathway.name,":",2)
+
+pathway.plot52<-pathway.plot5 %>% mutate(new_name=case_when(grepl("urea", pwy) ~ "Urea cycle",
+                                            grepl("tickland", pwy) ~ "L-arginine degradation XIII\n Stickland reaction",
+                                            grepl("tetra", pwy) ~ "Tetrapyrrole biosynthesis I\nfrom glutamate",
+                                            grepl("citru",pwy) ~ "L-citrulline biosynthesis",
+                                            grepl("unsatur",pwy) ~ "Fatty acid beta oxidation IV\n unsaturated even number", 
+                                            grepl("generic",pwy) ~ "Fatty acid beta oxidation I\n generic",
+                                            grepl("plant",pwy) ~ "Fatty acid beta oxidation II\nplant peroxisome",
+                                            TRUE ~ "NA"))
+```
+
+### Plot results
+
+```{r}
+p <- ggplot(data=pathway.plot52,
+       aes(x=coef,
+           y=reorder(new_name,coef))) +
+  geom_col(fill="#008080FF", width=0.6, alpha=0.7) +
+  geom_vline(xintercept = 0, linewidth = 0.4, color = "black") +
+  geom_text(
+    x=0,
+    aes(label=sprintf("P[adj]==%.2g", qval)),
+    hjust=-0.09, size=4, parse=TRUE) +
+  scale_x_continuous(limits=c(-1,0,1), expand=c(0,0),
+                     breaks=c(-1,0,1)) +
+  coord_cartesian(clip="off") +
+  labs(x="log2(fold change)", y="",
+       title="Functional pathways associated with infection status") +
+  theme_bw() + theme(
+    plot.title = element_text(hjust = 0.5, size=12, face="plain"),
+    axis.text.x = element_text(size=12, color="black"),
+    axis.text.y = element_text(size=12, color="black"),
+    text = element_text(size=12, family="Arial"),
+    plot.margin = unit(c(0.5,2.5,0.5,0), "cm"),
+    panel.grid.minor=element_blank(),
+    legend.position = "bottom"
+  )
+ggsave(
+  "/hpc/projects/data.science/abigail.glascock/IvC/IvC_maaslin_5_101325.svg",
+  plot=p,
+  width=5.5, height=5.5, units="in"
+)
+```
+
+
+
+
